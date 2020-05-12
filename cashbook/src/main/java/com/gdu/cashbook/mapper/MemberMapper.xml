@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 매퍼 네임 스페이스-->
+<mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
+<!-- vo 네임스페이스 -->
+ <insert id="signIn" parameterType="com.gdu.cashbook.vo.Member">
+ 	INSERT INTO member(
+ 		member_id,
+ 		member_pw,
+ 		member_name,
+ 		member_address,
+ 		member_phone,
+ 		member_mail
+ 	)VALUES(
+ 		#{memberId},
+ 		#{memberPw},
+ 		#{memberName},
+ 		#{memberAddr},
+ 		#{memberPhone},
+ 		#{memberMail}
+ 	)
+ </insert>
+</mapper>

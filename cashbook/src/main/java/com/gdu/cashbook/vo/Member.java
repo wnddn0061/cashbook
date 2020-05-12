@@ -44,6 +44,8 @@ public class Member {
 		this.memberMail = memberMail;
 	}
 	@Override
+	//toString
+	//칼럼을 Member로 묶어서 칼럼을 한번에 넘길 수 있게함
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberMail=" + memberMail
