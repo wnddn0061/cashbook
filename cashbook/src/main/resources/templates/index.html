@@ -15,8 +15,22 @@
 <body>
 <div class="container-fluid">
 	<h1>가계부</h1>
-	<div><a href="/login" class="btn btn-primary">로그인</a></div>
-	<div><a href="/signIn" class="btn btn-primary">회원가입</a></div>
+	
+	<!-- 세션분기 -->
+	<!-- 로그인 상태 -->
+	<!-- 로그인 상태에서는 회원가입 비활성화 -->
+	<div th:if="${session.loginMember != null}">
+		<a href="/logout" class="btn btn-primary">Logout</a>
+	</div>
+	<!-- 로그아웃 상태 -->
+	<!-- 로그아웃 상태에서는 회원가입 활성화 -->
+	<div th:if="${session.loginMember == null}">
+			<a href="/login" class="btn btn-primary">Login</a>
+			<a href="/signIn" class="btn btn-primary">회원가입</a>
+	</div>
+	
+	
+	
 	<div>본 콘텐츠의 저작권은 제공처에 있으며, 이를 무단 이용하는 경우 저작권법 등에 따라 법적 책임을 질 수 있습니다.</div>
 	<div>Copyright © JWsoft Corp. All Rights Reserved.</div>
 </div>

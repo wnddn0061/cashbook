@@ -27,7 +27,7 @@ $(document).ready(function(){
 	if($('#memberId').val().length < 4){
 		helpInit();
 		$('#idHelper').text("ID를 4글자 이상 입력하세요.");
-		$('#memberID').focus();
+		$('#memberId').focus();
 	}else if($('#memberPw').val().length <4){
 		helpInit();
 		let msg = "Pw를 4글자 이상 입력하세요.";
@@ -55,18 +55,31 @@ $(document).ready(function(){
 		$('#memberMail').focus();	
 	}else{
 		$('#myform').submit();
-	}
+		}
 	});
+	$('#idBtn').click(function(){
+		$('#idCheckForm').submit();
+	})
 });
 </script>
 </head>
 <body>
 <div class="container-fluid">
 	<h1>회원가입</h1>
+	<!-- 아이디 중복확인 폼  -->
+	<form id="idCheckForm" method="post" action="/checkMemberId">
+		<div>
+			Id 중복 확인 :
+			<input type="text" name="memberIdCheck" id="memberIdCheck">
+			<button id="idBtn" type="button">중복확인</button>
+			<span th:text="${msg}"></span>
+		</div>
+	</form>
+	<!-- 회원가입 폼 -->
 	<form id="myform" method="post" action="/signIn">
 		<div>
 			ID
-			<input type="text" name="memberId" id="memberId">
+			<input type="text" name="memberId" th:value="${memberIdCheck}" id="memberId" readonly="readonly">
 			<span id="idHelper"></span>
 		</div>
 		<div>

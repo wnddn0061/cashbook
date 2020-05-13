@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>InsertTitleHere</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+//유효성 검사
+	//초기화 함수
+	let helpInit = function(){
+		$('#memberIdHp').text("");
+		$('#memberPwHp').text("");
+		$('#msgHp').text("");
+	}
+		$(document).ready(function(){
+		$('#btn').click(function(){
+			// ID 유효성 검사
+			if($('#memberId').val().length <4){//글자 수가 4자리 미만이면 "ID를 입력하세요"를 출력
+				$('#memberIdHp').text("ID를 입력하세요.");
+				$('#memberId').focus();
+				return;
+			}
+			helpInit();//공백
+			//PW 유효성 검사
+			if($('#memberPw').val().length < 4){
+				$('#memberPwHp').text("Pw를 입력하세요.");
+				$('#memberPw').focus();
+				return;
+			}
+			helpInit();//공백
+			$('#loginForm').submit();
+		});
+	});
+</script>
+</head>
+<body>
+<div class="container-fluid">
+	<h1>Login</h1>
+	<form id= "loginForm" method="post" action="/login">
+		<!-- 아이디 -->
+		<div>
+			ID :
+			<input type="text" name="memberId" id="memberId">
+			<span id="memberIdHp"></span>
+		</div>
+		<!-- 비밀번호 -->
+		<div>
+			Pw :
+			<input type="password" name="memberPw" id="memberPw">
+			<span id="memberPwHp"></span>
+		</div>
+		<!-- 메세지 출력 -->
+		<div>
+			<span id="msgHp" th:text="${msg}"></span>
+		</div>
+		<div>
+			<button type="button" id="btn">확인</button>
+		</div>
+	</form>
+</div>
+</body>
+</html>

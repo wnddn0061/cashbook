@@ -2,24 +2,47 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <!-- 매퍼 네임 스페이스-->
-<mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
-<!-- vo 네임스페이스 -->
- <insert id="signIn" parameterType="com.gdu.cashbook.vo.Member">
- 	INSERT INTO member(
- 		member_id,
- 		member_pw,
- 		member_name,
- 		member_address,
- 		member_phone,
- 		member_mail
- 	)VALUES(
- 		#{memberId},
- 		#{memberPw},
- 		#{memberName},
- 		#{memberAddr},
- 		#{memberPhone},
- 		#{memberMail}
- 	)
- </insert>
+	<!-- 매퍼 네임 스페이스-->
+	<mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
+	
+	<!-- 회원가입 -->
+	<insert id="signIn" parameterType="com.gdu.cashbook.vo.Member"><!-- vo 네임스페이스 -->
+	 	INSERT INTO member(
+	 		member_id,
+	 		member_pw,
+	 		member_name,
+	 		member_address,
+	 		member_phone,
+	 		member_mail
+	 	)VALUES(
+	 		#{memberId},
+	 		#{memberPw},
+	 		#{memberName},
+	 		#{memberAddr},
+	 		#{memberPhone},
+	 		#{memberMail}
+	 	)
+	 	<!-- #{} : 동적 ${} : 정적 -->
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="selectLoginMember" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.LoginMember">
+		SELECT 
+			member_id as memberId,
+			member_pw as memberPw
+		FROM member
+		WHERE member_id = #{memberId}
+		AND member_pw = #{memberPw}
+	</select>
+	
+	<!-- 중복체크 -->
+	<select id="checkMemberId" parameterType="String" resultType="String">
+	<!-- 문자열로 들어오니 기본값과 리턴값 둘 다 String -->
+		SELECT
+			member_id
+		FROM member
+		WHERE member_id = #{checkMemberId}
+	</select>
+	<!-- update -->
+	<!-- delete -->
 </mapper>
