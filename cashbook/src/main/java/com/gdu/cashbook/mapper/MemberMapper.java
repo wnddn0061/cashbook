@@ -12,5 +12,5 @@ public interface MemberMapper {
 	//로그인
 	public LoginMember selectLoginMember(LoginMember loginMember);
 	//회원가입
-	public int signIn(Member member);
+	public int signUp(Member member);
 }

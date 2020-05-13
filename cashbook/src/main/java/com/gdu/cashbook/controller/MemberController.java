@@ -35,7 +35,7 @@ public class MemberController {
 			//아이디를 사용할 수 있음
 			model.addAttribute("msg","사용중인 ID 입니다.");
 		}
-		return "/signIn";
+		return "/signUp";
 	}
 	
 	//로그인
@@ -81,22 +81,22 @@ public class MemberController {
 	}
 	
 	//회원가입
-	@GetMapping("/signIn")//Request.get의 단축
-	public String signIn( HttpSession session) {
+	@GetMapping("/signUp")//Request.get의 단축
+	public String signUp( HttpSession session) {
 		//로그인 중일 때 비활성화
 				if(session.getAttribute("loginMember")!=null) {
 					return "redirect:/index";
 				}
-		return "signIn"; //signIn.jsp
+		return "signUp"; //signUp.jsp
 	}
 	
-	@PostMapping("/signIn")
-	public String signIn(Member member,  HttpSession session) {
+	@PostMapping("/signUp")
+	public String signUp(Member member,  HttpSession session) {
 		//로그인 중일때 비활성화
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
-		memberService.signInMember(member);
+		memberService.signUpMember(member);
 		//toString의 예시
 		//현재 Member는 Command 객체, 도메인 객체 둘 다 사용됨
 		System.out.println(member);
@@ -104,7 +104,7 @@ public class MemberController {
 	}
 	/*
 	 원래는 이렇게 쓸 것을 줄여줌
-	@PostMapping("/signIn")
+	@PostMapping("/signUp")
 	public String signIn(@RequestParam("memberId") String memberId,
 						 @RequestParam("memberPw") String memberPw,
 						 @RequestParam("memberName") String memberName,

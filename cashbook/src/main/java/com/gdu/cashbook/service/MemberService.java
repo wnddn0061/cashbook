@@ -22,8 +22,8 @@ public class MemberService {
 		return memberMapper.checkMemberId(checkMemberId);
 	}
 	//회원가입
-	public int signInMember(Member member) {
-		return memberMapper.signIn(member);
+	public int signUpMember(Member member) {
+		return memberMapper.signUp(member);
 	}
 	//로그인
 	public LoginMember login(LoginMember loginMember) {

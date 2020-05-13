@@ -6,7 +6,7 @@
 	<mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
 	
 	<!-- 회원가입 -->
-	<insert id="signIn" parameterType="com.gdu.cashbook.vo.Member"><!-- vo 네임스페이스 -->
+	<insert id="signUp" parameterType="com.gdu.cashbook.vo.Member"><!-- vo 네임스페이스 -->
 	 	INSERT INTO member(
 	 		member_id,
 	 		member_pw,
