@@ -16,7 +16,7 @@
 	 		member_mail
 	 	)VALUES(
 	 		#{memberId},
-	 		#{memberPw},
+	 		PASSWORD(#{memberPw}),
 	 		#{memberName},
 	 		#{memberAddr},
 	 		#{memberPhone},
@@ -32,7 +32,7 @@
 			member_pw as memberPw
 		FROM member
 		WHERE member_id = #{memberId}
-		AND member_pw = #{memberPw}
+		AND member_pw = PASSWORD(#{memberPw})
 	</select>
 	
 	<!-- 중복체크 -->
@@ -40,7 +40,11 @@
 	<!-- 문자열로 들어오니 기본값과 리턴값 둘 다 String -->
 		SELECT
 			member_id
-		FROM member
+		FROM 
+			(SELECT member_id FROM member
+			UNION
+			SELECT member_id FROM memberid
+			)t
 		WHERE member_id = #{checkMemberId}
 	</select>
 	
@@ -55,6 +59,23 @@
 		FROM member
 		WHERE member_id = #{memberId}
 	</select>
+	
 	<!-- update -->
+	<update id="modifyMember" parameterType="com.gdu.cashbook.vo.Member">
+		UPDATE member
+		SET member_name = #{memberName},
+			member_address = #{memberAddr},
+			member_phone = #{memberPhone},
+			member_mail = #{memberMail}
+		WHERE 
+			member_id = #{memberId}
+	</update>
+	
 	<!-- delete -->
+	<delete id="removeMember" parameterType="com.gdu.cashbook.vo.LoginMember">
+		DELETE 
+		FROM member
+		WHERE member_id = #{memberId}
+		AND member_pw = PASSWORD(#{memberPw})	
+	</delete>
 </mapper>

@@ -1,4 +1,4 @@
-package com.gdu.cashbook.controller;
+  package com.gdu.cashbook.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -58,7 +58,7 @@ public class MemberController {
 		}
 		
 		LoginMember returnLoginMember = memberService.login(loginMember);
-		System.out.println(returnLoginMember+"<--returnLoginMember");
+		//System.out.println(returnLoginMember+"<--returnLoginMember");
 		if(returnLoginMember == null) {//로그인 실패시 다시 로그인 창으로
 			//포워딩
 			model.addAttribute("msg","ID와 PW를 확인하세요.");
@@ -99,7 +99,7 @@ public class MemberController {
 		memberService.signUpMember(member);
 		//toString의 예시
 		//현재 Member는 Command 객체, 도메인 객체 둘 다 사용됨
-		System.out.println(member);
+		//System.out.println(member);
 		return "redirect:/index";
 		/*
 		 원래는 이렇게 쓸 것을 줄여줌
@@ -115,7 +115,7 @@ public class MemberController {
 		*/
 	}
 	
-	//회원정보(상세보기
+	//회원정보(상세보기)
 	@GetMapping("/memberInfo")
 	public String memberInfo(HttpSession session, Model model) {
 		//세션 : 로그인 중일 때 비활성화
@@ -124,8 +124,57 @@ public class MemberController {
 		}
 		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
 		model.addAttribute("member", member);
-		System.out.println(member+"<--Controller.memberInfo.member");
+		//System.out.println(member+"<--Controller.memberInfo.member");
 		return "memberInfo";
 	}
-
+	
+	//회원탈퇴
+	@GetMapping("/removeMember")
+	public String removeMember(HttpSession session, Model model, LoginMember loginMember) {
+		//세션
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+		return "redirect:/index";
+		}
+		memberService.removeMember(loginMember);
+		model.addAttribute("loginMember", loginMember);
+		//System.out.println(loginMember+"<--Controller.removeGet.loginMember");
+		
+		return "removeMember";
+	}
+	@PostMapping("/removeMember")
+	public String removeMember(HttpSession session, @RequestParam("memberPw")String memberPw) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/index";
+			}
+		LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
+		loginMember.setMemberPw(memberPw);
+		memberService.removeMember(loginMember);
+		session.invalidate();
+		return "redirect:/index";
+	}
+	
+	//회원정보 수정
+	@GetMapping("/modifyMember")
+	public String modifyMember(HttpSession session, Model model, LoginMember loginMember) {
+		//세션 : 로그인 중일때 활성화
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/index";
+			}
+		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
+		model.addAttribute("member", member);
+		System.out.println(member+"<--Controller.modify.member");
+		return "modifyMember";
+	}
+	
+	@PostMapping("/modifyMember")
+	public String modifyMember(HttpSession session, Member member) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/index";
+			}
+		memberService.modifyMember(member);
+		System.out.println(member+"<--Controller.modify.member");
+		return "memberInfo";
+		
+		
+	}
 }

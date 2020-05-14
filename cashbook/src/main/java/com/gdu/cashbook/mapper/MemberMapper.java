@@ -15,4 +15,8 @@ public interface MemberMapper {
 	public int signUp(Member member);
 	//회원정보(상세보기)
 	public Member selectMemberOne(LoginMember loginMember);
+	//회원탈퇴
+	public int removeMember(LoginMember loginMember); 
+	//회원정보 수정
+	public int modifyMember(Member member);
 }

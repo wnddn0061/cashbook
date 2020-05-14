@@ -28,8 +28,8 @@ public class Member {
 	public String getMemberAddr() {
 		return memberAddr;
 	}
-	public void setMemberAddr(String memberAddress) {
-		this.memberAddr = memberAddress;
+	public void setMemberAddr(String memberAddr){
+		this.memberAddr = memberAddr;
 	}
 	public String getMemberPhone() {
 		return memberPhone;
