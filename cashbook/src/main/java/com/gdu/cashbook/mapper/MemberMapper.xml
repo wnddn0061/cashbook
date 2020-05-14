@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<!-- 매퍼 네임 스페이스-->
 	<mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
-	
+	<!-- insert -->
 	<!-- 회원가입 -->
 	<insert id="signUp" parameterType="com.gdu.cashbook.vo.Member"><!-- vo 네임스페이스 -->
 	 	INSERT INTO member(
@@ -24,7 +24,7 @@
 	 	)
 	 	<!-- #{} : 동적 ${} : 정적 -->
 	</insert>
-	
+	<!-- select -->
 	<!-- 로그인 -->
 	<select id="selectLoginMember" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.LoginMember">
 		SELECT 
@@ -42,6 +42,18 @@
 			member_id
 		FROM member
 		WHERE member_id = #{checkMemberId}
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="selectMemberOne" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.Member">
+		SELECT
+			member_id as memberId,
+			member_name as memberName,
+			member_address as memberAddr,
+			member_phone as memberPhone,
+			member_mail as memberMail
+		FROM member
+		WHERE member_id = #{memberId}
 	</select>
 	<!-- update -->
 	<!-- delete -->

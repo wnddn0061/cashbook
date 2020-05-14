@@ -29,5 +29,10 @@ public class MemberService {
 	public LoginMember login(LoginMember loginMember) {
 		return memberMapper.selectLoginMember(loginMember);
 	}
+	
+	//상세보기
+	public Member getMemberOne(LoginMember loginMember) {
+		return memberMapper.selectMemberOne(loginMember);
+	}
 
 }

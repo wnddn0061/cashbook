@@ -22,7 +22,7 @@ public class MemberController {
 	//ID중복확인 값 받기
 	@PostMapping("/checkMemberId")
 	public String checkMemberId(HttpSession session, Model model, @RequestParam("memberIdCheck")String memberIdCheck) {
-		//로그인 중일 때 비활성화
+		//세션 : 로그인 중일 때 비활성화
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 				}
@@ -42,7 +42,7 @@ public class MemberController {
 	//로그인 폼
 	@GetMapping("/login")
 	public String login( HttpSession session) {
-		//로그인 중일 때 비활성화
+		//세션 :로그인 중일 때 비활성화
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
@@ -52,7 +52,7 @@ public class MemberController {
 	//로그인 액션
 	@PostMapping("/login")
 	public String login(Model model, LoginMember loginMember, HttpSession session) {//매개변수로 세션을 받아올 수 있음(==request.getSession()
-		//로그인 중일 때 비활성화
+		//세션 :로그인 중일 때 비활성화
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
@@ -65,14 +65,14 @@ public class MemberController {
 			return "/login";
 		} else {//로그인(세션) 성공시
 			session.setAttribute("loginMember", returnLoginMember);
-		return "redirect:/index";
+		return "redirect:/home";
 		}
 	}
 	
 	// 로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		//로그인이 아닐때 비활성화
+		//세션 : 로그인이 아닐때 활성화
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/index";
 		}
@@ -83,7 +83,7 @@ public class MemberController {
 	//회원가입
 	@GetMapping("/signUp")//Request.get의 단축
 	public String signUp( HttpSession session) {
-		//로그인 중일 때 비활성화
+		//세션 : 로그인 중일 때 비활성화
 				if(session.getAttribute("loginMember")!=null) {
 					return "redirect:/index";
 				}
@@ -92,7 +92,7 @@ public class MemberController {
 	
 	@PostMapping("/signUp")
 	public String signUp(Member member,  HttpSession session) {
-		//로그인 중일때 비활성화
+		//세션 : 로그인 중일 때 비활성화
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
@@ -101,17 +101,31 @@ public class MemberController {
 		//현재 Member는 Command 객체, 도메인 객체 둘 다 사용됨
 		System.out.println(member);
 		return "redirect:/index";
+		/*
+		 원래는 이렇게 쓸 것을 줄여줌
+		@PostMapping("/signUp")
+		public String signIn(@RequestParam("memberId") String memberId,
+							 @RequestParam("memberPw") String memberPw,
+							 @RequestParam("memberName") String memberName,
+							 @RequestParam("memberAddr") String memberAddr,
+							 @RequestParam("memberPhone") String memberPhone,
+							 @RequestParam("memberMail") String memberMail) {
+			return "redirect:/";
+		}
+		*/
 	}
-	/*
-	 원래는 이렇게 쓸 것을 줄여줌
-	@PostMapping("/signUp")
-	public String signIn(@RequestParam("memberId") String memberId,
-						 @RequestParam("memberPw") String memberPw,
-						 @RequestParam("memberName") String memberName,
-						 @RequestParam("memberAddr") String memberAddr,
-						 @RequestParam("memberPhone") String memberPhone,
-						 @RequestParam("memberMail") String memberMail) {
-		return "redirect:/";
+	
+	//회원정보(상세보기
+	@GetMapping("/memberInfo")
+	public String memberInfo(HttpSession session, Model model) {
+		//세션 : 로그인 중일 때 비활성화
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/index";
+		}
+		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
+		model.addAttribute("member", member);
+		System.out.println(member+"<--Controller.memberInfo.member");
+		return "memberInfo";
 	}
-	*/
+
 }

@@ -11,6 +11,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+	#center{text-align:center;}
+	#left{}
+</style>
 <script>
 //초기화 함수
 let helpInit =function(){
@@ -20,6 +24,7 @@ let helpInit =function(){
 	$('#addrHelper').text("");
 	$('#phoneHelper').text("");
 	$('#mailHelper').text("");
+	$('memberIdCheckHp').text("");
 };
 
 $(document).ready(function(){
@@ -57,61 +62,70 @@ $(document).ready(function(){
 		$('#myform').submit();
 		}
 	});
+	
+	//Id 중복체크 유효성 검사
 	$('#idBtn').click(function(){
+		if($('#memberIdCheck').val().length < 4){
+			$('#memberIdCheckHp').text("ID를 4글자 이상 입력하세요.");
+			$('#memberIdCheck').focus();
+			return;
+		}
 		$('#idCheckForm').submit();
 	})
 });
 </script>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" id="left">
 	<h1>회원가입</h1>
 	<!-- 아이디 중복확인 폼  -->
 	<form id="idCheckForm" method="post" action="/checkMemberId">
 		<div>
-			Id 중복 확인 :
+			ID 중복 확인 :
 			<input type="text" name="memberIdCheck" id="memberIdCheck">
 			<button id="idBtn" type="button">중복확인</button>
-			<span th:text="${msg}"></span>
+			<span id="memberIdCheckHp" th:text="${msg}"></span>
 		</div>
 	</form>
 	<!-- 회원가입 폼 -->
+	
 	<form id="myform" method="post" action="/signUp">
 		<div>
-			ID
+			ID :
 			<input type="text" name="memberId" th:value="${memberIdCheck}" id="memberId" readonly="readonly">
 			<span id="idHelper"></span>
 		</div>
 		<div>
-			비밀번호
+			비밀번호 :
 			<input type="password" name="memberPw" id="memberPw">
 			<span id="pwHelper"></span>
 		</div>
 		<div>
-			비밀번호 확인
+			비밀번호 확인 :
 			<input type="password" id="memberPw2">
 		</div>
 		<div>
-			사용자 이름
+			사용자 이름 :
 			<input type="text" name="memberName" id="memberName">
 			<span id="nameHelper"></span>
 		</div>
 		<div>
-			주소
+			주소 :
 			<input type="text" name="memberAddr" id="memberAddr">
 			<span id="addrHelper"></span>
 		</div>
 		<div>
-			전화번호
+			전화번호 :
 			<input type="text" name="memberPhone" id="memberPhone">
 			<span id="phoneHelper"></span>
 		</div>
 		<div>
-			이메일
+			이메일 :
 			<input type="text" name="memberMail" id="memberMail">
 			<span id="mailHelper"></span>
 		</div>
 		<button type="button" id="btn">회원가입</button>
+
 	</form>
 </div>
 </body>
