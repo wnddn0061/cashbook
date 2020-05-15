@@ -22,8 +22,7 @@ public class MemberController {
 	//ID중복확인 값 받기
 	@PostMapping("/checkMemberId")
 	public String checkMemberId(HttpSession session, Model model, @RequestParam("memberIdCheck")String memberIdCheck) {
-		//세션 : 로그인 중일 때 비활성화
-		if(session.getAttribute("loginMember")!=null) {
+		if(session.getAttribute("loginMember")!=null) {//로그인 중이면 인덱스로
 			return "redirect:/index";
 				}
 		//아이디 중복 확인
@@ -42,8 +41,7 @@ public class MemberController {
 	//로그인 폼
 	@GetMapping("/login")
 	public String login( HttpSession session) {
-		//세션 :로그인 중일 때 비활성화
-		if(session.getAttribute("loginMember")!=null) {
+		if(session.getAttribute("loginMember")!=null) {//로그인 중이면 인덱스로
 			return "redirect:/index";
 		}
 		return "login";
@@ -53,7 +51,7 @@ public class MemberController {
 	@PostMapping("/login")
 	public String login(Model model, LoginMember loginMember, HttpSession session) {//매개변수로 세션을 받아올 수 있음(==request.getSession()
 		//세션 :로그인 중일 때 비활성화
-		if(session.getAttribute("loginMember")!=null) {
+		if(session.getAttribute("loginMember")!=null) {//로그인 중이면 인덱스로
 			return "redirect:/index";
 		}
 		
@@ -73,7 +71,7 @@ public class MemberController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		//세션 : 로그인이 아닐때 활성화
-		if(session.getAttribute("loginMember")==null) {
+		if(session.getAttribute("loginMember")==null) {//로그인 중이 아니면 인덱스로
 			return "redirect:/index";
 		}
 		session.invalidate();
@@ -84,7 +82,7 @@ public class MemberController {
 	@GetMapping("/signUp")//Request.get의 단축
 	public String signUp( HttpSession session) {
 		//세션 : 로그인 중일 때 비활성화
-				if(session.getAttribute("loginMember")!=null) {
+				if(session.getAttribute("loginMember")!=null) {//로그인 중이면 인덱스로
 					return "redirect:/index";
 				}
 		return "signUp"; //signUp.jsp
@@ -92,8 +90,7 @@ public class MemberController {
 	
 	@PostMapping("/signUp")
 	public String signUp(Member member,  HttpSession session) {
-		//세션 : 로그인 중일 때 비활성화
-		if(session.getAttribute("loginMember")!=null) {
+		if(session.getAttribute("loginMember")!=null) {//로그인 중이면 인덱스로
 			return "redirect:/index";
 		}
 		memberService.signUpMember(member);
@@ -119,7 +116,7 @@ public class MemberController {
 	@GetMapping("/memberInfo")
 	public String memberInfo(HttpSession session, Model model) {
 		//세션 : 로그인 중일 때 비활성화
-		if(session.getAttribute("loginMember")==null) {
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 		}
 		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
@@ -143,12 +140,13 @@ public class MemberController {
 	}
 	@PostMapping("/removeMember")
 	public String removeMember(HttpSession session, @RequestParam("memberPw")String memberPw) {
-		if(session.getAttribute("loginMember")==null) {
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 			}
 		LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
 		loginMember.setMemberPw(memberPw);
 		memberService.removeMember(loginMember);
+		
 		session.invalidate();
 		return "redirect:/index";
 	}
@@ -156,10 +154,11 @@ public class MemberController {
 	//회원정보 수정
 	@GetMapping("/modifyMember")
 	public String modifyMember(HttpSession session, Model model, LoginMember loginMember) {
-		//세션 : 로그인 중일때 활성화
-		if(session.getAttribute("loginMember")==null) {
+		//세션
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 			}
+		
 		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
 		model.addAttribute("member", member);
 		System.out.println(member+"<--Controller.modify.member");
@@ -168,13 +167,56 @@ public class MemberController {
 	
 	@PostMapping("/modifyMember")
 	public String modifyMember(HttpSession session, Member member) {
-		if(session.getAttribute("loginMember")==null) {
+		//세션
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 			}
+		
 		memberService.modifyMember(member);
 		System.out.println(member+"<--Controller.modify.member");
-		return "memberInfo";
-		
-		
+		return "memberInfo";	
 	}
+	
+	//ID 찾기
+	@GetMapping("/findMemberId")
+	public String findMemberId(HttpSession session) {
+		//세션
+		if(session.getAttribute("loginMember")!=null) {//로그인이 안돼있으면 인덱스로
+		return "redirect:/index";
+		}
+		return "findMemberId";
+	}
+	
+	@PostMapping("/findMemberId")
+	public String findMemberId(HttpSession session, Model model, Member member) {
+		String memberId = memberService.getMemberIdByString(member);
+		if(memberId == null) {
+			model.addAttribute("msg", "입력값을 확인하세요.");
+			return "/findMemberId";
+		}else {
+			model.addAttribute("memberId", memberId);
+			return "findMemberIdView";
+		}
+	}
+	
+	//pw찾기
+	@GetMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		return "findMemberPw";
+	}
+	
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session, Model model, Member member) {
+		int row = memberService.getMemberPw(member);
+		String msg = "아이디와 메일을 확인하세요.";
+		if(row == 1) {
+			msg = "비밀번호를 입력한 메일로 전송 하였습니다.";
+		}
+		model.addAttribute("msg", msg);
+		return "findMemberPwView";
+	}
+	
 }

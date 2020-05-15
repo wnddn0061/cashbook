@@ -64,6 +64,10 @@
 			<span id="msgHp" th:text="${msg}"></span>
 		</div>
 		<div>
+			<a th:href="@{/findMemberId}">ID가 기억나지 않습니다.</a><!-- 이름, 메일, 전화번호 입력시 매칭되는 ID를 출력한다.-->
+			<a th:href="@{/findMemberPw}">PW가 기억나지 않습니다.</a><!-- 아이디, 이메일 입력 : 이메일로 관리자가 변경된 비밀번호를 보냄 -->
+		</div>
+		<div>
 			<button type="button" id="btn">확인</button>
 		</div>
 	</form>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>InsertTitleHere</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- 유효성 검사 -->
+<script>
+	//초기화 함수
+	let Init = function(){
+		$('#memberNameHp').text("");
+		$('#memberPhoneHp').text("");
+		$('#memberMailHp').text("");
+	}
+	//유효성 검사
+	$(document).ready(function(){
+	$('#btn').click(function(){
+	//Name 유효성 검사
+	if($('#memberName').val()==null){
+		$('#memberNameHp').text("이름을 입력하세요.");
+		$('#memberName').focus();
+		return;
+	}
+	Init();
+	//Phone 유효성 검사
+	if($('#memberPhone').val()==null){
+		$('#memberPhoneHp').text("연락처를 입력하세요.");
+		$('#memberPhone').focus();
+		return;
+	}
+	Init();
+	//Mail 유효성 검사
+	if($('#memberMail').val()==null){
+		$('#memberMail').text("메일을 입력하세요.");
+		$('#memberMail').focus();
+		return;
+	}
+	Init();
+		$('#findMemberId').submit();
+	});
+});
+</script>
+</head>
+<body>
+	<h1>ID 찾기</h1>
+	<form id="findMemberId" method="post" th:action="@{/findMemberId}">
+		<div>
+			이름 :
+			<input type="text" name="memberName" id="memberName">
+			<span id="memberNameHp"></span>
+		</div>
+		<div>
+			연락처 :
+			<input type="text" name="memberPhone" id="memberPhone">
+			<span id="memberPhoneHp"></span>
+		</div>
+		<div>
+			메일 주소 :
+			<input type="text" name="memberMail" id="memberMail">
+			<span id="memberMailHp"></span>
+		</div>
+		<div>
+			<button type="button" id="btn">아이디 찾기</button>
+		</div>
+		<div>
+		<div th:if ="${msg}"></div>
+		</div>
+	</form>
+
+</body>
+</html>

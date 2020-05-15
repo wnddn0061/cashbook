@@ -12,31 +12,37 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
+
+//유효성 검사
 $(document).ready(function(){
 	$('#btn').click(function(){
-	
-		$('#removeMember').submit();
+		if($('#memberId').val().length<4){
+			$('#memberIdHp').text("ID를 입력하세요.");
+			$('#memberId').focus();
+			return;
+		}
+		
+		$('#findMemberPw').submit();
 	});
-})
+});
 </script>
 </head>
 <body>
-<div class="container-fluid">
-	<h1>회원탈퇴</h1>
-		<form id="removeMember" method="post" action="/removeMember">
+	<h1>비밀번호 찾기</h1>
+	<form id="findMemberPw" method="post" th:action="@{/findMemberPw}">
 		<div>
 			ID :
-			<input type="text" th:value="${loginMember.memberId}" name="memberId" readonly="readonly">
+			<input type="text" name="memberId" id="memberId">
+			<span id="memberIdHp"></span>
+		</div>
+			<div>
+			Mail :
+			<input type="text" name="memberMail" id="memberMail">
+			<span id="memberMailHp"></span>
 		</div>
 		<div>
-			PW :
-			<input type="password" name="memberPw">
+			<button type="button" id="btn">비밀번호 찾기</button>
 		</div>
-		<div>
-			<span id="removePwCheck" th:text="${msg}"></span>
-		</div>
-		<button type="button" id="btn">수정</button>
-		</form>
-</div>
+	</form>
 </body>
 </html>

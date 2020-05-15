@@ -11,32 +11,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script>
-$(document).ready(function(){
-	$('#btn').click(function(){
-	
-		$('#removeMember').submit();
-	});
-})
-</script>
 </head>
 <body>
-<div class="container-fluid">
-	<h1>회원탈퇴</h1>
-		<form id="removeMember" method="post" action="/removeMember">
-		<div>
-			ID :
-			<input type="text" th:value="${loginMember.memberId}" name="memberId" readonly="readonly">
-		</div>
-		<div>
-			PW :
-			<input type="password" name="memberPw">
-		</div>
-		<div>
-			<span id="removePwCheck" th:text="${msg}"></span>
-		</div>
-		<button type="button" id="btn">수정</button>
-		</form>
-</div>
+	<h1>비밀번호 찾기</h1>
+		<div th:text ="${msg}"></div>
+		<div><a th:href ="@{/index}">처음으로</a></div>
+		<div><a th:href ="@{/findMemberPw}">뒤로</a></div>
 </body>
 </html>

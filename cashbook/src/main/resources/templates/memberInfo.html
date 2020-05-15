@@ -20,6 +20,12 @@
 		<div><a th:href = "@{/modifyMember(memberId=${member.memberId})}">정보 수정</a></div>
 		<table class="table" border="1">
 			<tr>
+				<td>사진</td>
+				<td>
+					<img th:src="@{${'/upload/'+member.memberPic}}">
+				</td>
+			</tr>
+			<tr>
 				<td>아이디</td>
 				<td th:text="${member.memberId}"></td>
 			</tr>

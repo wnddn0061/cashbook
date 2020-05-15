@@ -19,4 +19,8 @@ public interface MemberMapper {
 	public int removeMember(LoginMember loginMember); 
 	//회원정보 수정
 	public int modifyMember(Member member);
+	//아이디찾기
+	public String selectMemberIdByMember(Member member);
+	//비밀번호찾기
+	public int updateMemberPw(Member member);
 }

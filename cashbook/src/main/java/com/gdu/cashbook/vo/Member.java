@@ -7,6 +7,7 @@ public class Member {
 	private String memberAddr;
 	private String memberPhone;
 	private String memberMail;
+	private String memberPic;
 	public String getMemberId() {
 		return memberId;
 	}
@@ -28,7 +29,7 @@ public class Member {
 	public String getMemberAddr() {
 		return memberAddr;
 	}
-	public void setMemberAddr(String memberAddr){
+	public void setMemberAddr(String memberAddr) {
 		this.memberAddr = memberAddr;
 	}
 	public String getMemberPhone() {
@@ -43,12 +44,17 @@ public class Member {
 	public void setMemberMail(String memberMail) {
 		this.memberMail = memberMail;
 	}
+	public String getMemberPic() {
+		return memberPic;
+	}
+	public void setMemberPic(String memberPic) {
+		this.memberPic = memberPic;
+	}
 	@Override
-	//toString
-	//칼럼을 Member로 묶어서 한번에 넘길 수 있게함
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberMail=" + memberMail
-				+ "]";
+				+ ", memberPic=" + memberPic + "]";
 	}
+
 }
