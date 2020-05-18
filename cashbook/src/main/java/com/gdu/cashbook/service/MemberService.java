@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class MemberService {
 	private MemberidMapper memberidMapper;
 	@Autowired
 	private JavaMailSender javaMailSender;
+	@Value("D:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\")
+	private String path;
 	
 	
 	//ID중복확인
@@ -40,13 +43,14 @@ public class MemberService {
 	//회원가입
 	public int signUpMember(MemberForm memberForm) {
 		MultipartFile mf = memberForm.getMemberPic();
-		//확장자 필요
+		//확장자를 찾기 위해 originName 출력
 		String originName = mf.getOriginalFilename();
 		System.out.println(originName+"<--Service.OriginName");
-		int lastDot = originName.lastIndexOf("."); 
+		//확장자 자르기
+		int lastDot = originName.lastIndexOf("."); //.을 찾아라
 		String extension = originName.substring(lastDot);
 		/*
-		//이미지 파일만 받으려면
+		//특정 파일만 받으려면
 		if(mf.getContentType().equals("image/png") || mf.getContentType().equals("image/jpeg")) {//jpeg나 png파일만 받을 수 있다
 			//업로드
 		}else {
@@ -74,9 +78,8 @@ public class MemberService {
 		System.out.println(member+"<--memberService.member");
 		
 		//2.파일 저장
-		String path = "D:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload";
 		//빈파일 생성
-		File file = new File(path+"\\"+memberPic);
+		File file = new File(path+memberPic);
 		try {
 			mf.transferTo(file);
 		} catch (Exception e) {
@@ -101,6 +104,16 @@ public class MemberService {
 	//회원탈퇴
 	public void removeMember(LoginMember loginMember) {
 		//System.out.println(loginMember+"<--Service.remove.loginMember");
+		//멤버이미지 파일 삭제
+		//1.파일 이름 member_pic을 가져와야함(select member_pic from member
+		//파일 이름 불러오기
+		String memberPic = memberMapper.selectMemberPic(loginMember.getMemberId());
+		//2.파일삭제
+		File file = new File(path+memberPic);
+		if(file.exists()) {//파일이 있으면
+			file.delete();//삭제
+		}
+		
 		//memberid에 추가
 		Memberid memberid = new Memberid();
 		memberid.setMemberId(loginMember.getMemberId());
@@ -108,10 +121,55 @@ public class MemberService {
 		//삭제
 		memberMapper.removeMember(loginMember);
 	}
+	
+	
 	//회원정보 수정
-	public int modifyMember(Member member) {
-		return memberMapper.modifyMember(member);
+	//이미지 파일이 있을 시 삭제 -> 삽입
+	public int modifyMember(MemberForm memberForm) {
+		//1.파일 불러오기
+		String memberPic = memberMapper.selectMemberPic(memberForm.getMemberId());
+		//빈파일 생성
+		File file = new File(path+memberPic);
+		//파일이 있으면 삭제
+		if(file.exists()) {
+			file.delete();
+		}else {
+		MultipartFile mf = memberForm.getMemberPic();
+		//확장자를 찾기 위해 originName 출력
+		String originName = mf.getOriginalFilename();
+		System.out.println(originName+"<--originName.Service.modify");
+		//확장자 자르기
+		int lastDot = originName.lastIndexOf(".");
+		String extension = originName.substring(lastDot);
+		
+		//새로운 이름을 생성 :UUID
+		String memberNamePic = memberForm.getMemberId()+extension;
+		//memberForm을 member로 변환
+		//파일을 디스크에 물리적 저장
+		Member member = new Member();
+		member.setMemberId(memberForm.getMemberId());
+		member.setMemberPw(memberForm.getMemberPw());
+		member.setMemberAddr(memberForm.getMemberAddr());
+		member.setMemberName(memberForm.getMemberName());
+		member.setMemberPhone(memberForm.getMemberPhone());
+		member.setMemberMail(memberForm.getMemberMail());
+		member.setMemberPic(memberPic);
+		int row =memberMapper.modifyMember(member);
+		System.out.println(member+"<--member.Service");
+		//빈 파일 생성 및 저장
+		File filePic = new File(path+memberPic);
+		//예외처리
+		try {
+			mf.transferTo(filePic);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+		return row;
+		}
+		return modifyMember(memberForm);
 	}
+
 	//ID 찾기
 	public String getMemberIdByString(Member member) {
 		return memberMapper.selectMemberIdByMember(member);	

@@ -95,6 +95,15 @@ public class MemberController {
 			return "redirect:/index";
 		}
 		System.out.println(memberForm+"<-memberForm");
+		
+		if(memberForm.getMemberPic() != null) {
+			if(memberForm.getMemberPic().getContentType().equals("image/png") && 
+				memberForm.getMemberPic().getContentType().equals("image/jpg") &&
+				memberForm.getMemberPic().getContentType().equals("image/gif")){
+			//png도 아니고 jpg도 아니고 gif도 아니면 리턴
+				return "redirect:/signUp";
+			}
+		}
 		memberService.signUpMember(memberForm);
 		
 		return "redirect:/index";
@@ -178,14 +187,21 @@ public class MemberController {
 	}
 	
 	@PostMapping("/modifyMember")
-	public String modifyMember(HttpSession session, Member member) {
+	public String modifyMember(HttpSession session, MemberForm memberForm) {
 		//세션
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
+		}
+		//png도 아니고 jpg도 아니고 gif도 아니면 리턴
+		if(memberForm.getMemberPic()!=null) {
+		if(memberForm.getMemberPic().getContentType().equals("image/png")&&
+			memberForm.getMemberPic().getContentType().equals("image/jpg")&&
+			memberForm.getMemberPic().getContentType().equals("image/gif")) {
+			return "redirect:/memberInfo";
 			}
-		
-		memberService.modifyMember(member);
-		System.out.println(member+"<--Controller.modify.member");
+		}
+		memberService.modifyMember(memberForm);
+		System.out.println(memberForm+"<--Controller.modify.member");
 		return "memberInfo";	
 	}
 	

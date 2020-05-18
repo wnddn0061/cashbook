@@ -73,6 +73,12 @@
 		AND member_mail = #{memberMail}
 	</select>
 	
+	<!-- 이미지 파일 불러오기 -->
+	<select id ="selectMemberPic" parameterType="String" resultType="String">
+		SELECT member_pic
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
 	
 	<!-- update -->
 	<update id="modifyMember" parameterType="com.gdu.cashbook.vo.Member">
@@ -80,7 +86,8 @@
 		SET member_name = #{memberName},
 			member_address = #{memberAddr},
 			member_phone = #{memberPhone},
-			member_mail = #{memberMail}
+			member_mail = #{memberMail},
+			member_pic = #{memberPic}
 		WHERE 
 			member_id = #{memberId}
 	</update>
