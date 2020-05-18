@@ -1,13 +1,15 @@
 package com.gdu.cashbook.vo;
 
-public class Member {//table의 도메인 과 일치(도메인 타입)
+import org.springframework.web.multipart.MultipartFile;
+
+public class MemberForm {//table의 도메인 과 일치(도메인 타입)
 	private String memberId;
 	private String memberPw;
 	private String memberName;
 	private String memberAddr;
 	private String memberPhone;
 	private String memberMail;
-	private String memberPic;
+	private MultipartFile memberPic;//여러개의 파일을 올릴떄 :MultipartFile[] memberPic
 	public String getMemberId() {
 		return memberId;
 	}
@@ -44,17 +46,19 @@ public class Member {//table의 도메인 과 일치(도메인 타입)
 	public void setMemberMail(String memberMail) {
 		this.memberMail = memberMail;
 	}
-	public String getMemberPic() {
+	public MultipartFile getMemberPic() {
 		return memberPic;
 	}
-	public void setMemberPic(String memberPic) {
+	public void setMemberPic(MultipartFile memberPic) {
 		this.memberPic = memberPic;
 	}
+	//toString
 	@Override
 	public String toString() {
-		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
+		return "MemberForm [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberMail=" + memberMail
 				+ ", memberPic=" + memberPic + "]";
 	}
-
+	
+	
 }

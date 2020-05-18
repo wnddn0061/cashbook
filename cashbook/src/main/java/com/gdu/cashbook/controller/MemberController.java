@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gdu.cashbook.service.MemberService;
 import com.gdu.cashbook.vo.LoginMember;
 import com.gdu.cashbook.vo.Member;
+import com.gdu.cashbook.vo.MemberForm;
 
 @Controller
 public class MemberController {
@@ -89,6 +90,17 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signUp")
+	public String signUp(MemberForm memberForm,  HttpSession session) {
+		if(session.getAttribute("loginMember")!=null) {//로그인 중이면 인덱스로
+			return "redirect:/index";
+		}
+		System.out.println(memberForm+"<-memberForm");
+		memberService.signUpMember(memberForm);
+		
+		return "redirect:/index";
+	}
+	/*
+	@PostMapping("/signUp")
 	public String signUp(Member member,  HttpSession session) {
 		if(session.getAttribute("loginMember")!=null) {//로그인 중이면 인덱스로
 			return "redirect:/index";
@@ -98,7 +110,7 @@ public class MemberController {
 		//현재 Member는 Command 객체, 도메인 객체 둘 다 사용됨
 		//System.out.println(member);
 		return "redirect:/index";
-		/*
+		
 		 원래는 이렇게 쓸 것을 줄여줌
 		@PostMapping("/signUp")
 		public String signIn(@RequestParam("memberId") String memberId,
@@ -110,7 +122,7 @@ public class MemberController {
 			return "redirect:/";
 		}
 		*/
-	}
+
 	
 	//회원정보(상세보기)
 	@GetMapping("/memberInfo")
@@ -194,7 +206,7 @@ public class MemberController {
 			model.addAttribute("msg", "입력값을 확인하세요.");
 			return "/findMemberId";
 		}else {
-			model.addAttribute("memberId", memberId);
+			session.setAttribute("memberId", memberId);
 			return "findMemberIdView";
 		}
 	}
@@ -210,13 +222,15 @@ public class MemberController {
 	
 	@PostMapping("/findMemberPw")
 	public String findMemberPw(HttpSession session, Model model, Member member) {
-		int row = memberService.getMemberPw(member);
+		int memberId = memberService.getMemberPw(member);
 		String msg = "아이디와 메일을 확인하세요.";
-		if(row == 1) {
+		if(memberId == 1) {
 			msg = "비밀번호를 입력한 메일로 전송 하였습니다.";
+		}else {
+			model.addAttribute("msg", msg);
+			session.setAttribute("memberId", memberId);
+		return "/findMemberPw";
 		}
-		model.addAttribute("msg", msg);
 		return "findMemberPwView";
 	}
-	
 }

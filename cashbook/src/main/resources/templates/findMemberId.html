@@ -13,39 +13,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- 유효성 검사 -->
 <script>
-	//초기화 함수
-	let Init = function(){
-		$('#memberNameHp').text("");
-		$('#memberPhoneHp').text("");
-		$('#memberMailHp').text("");
-	}
 	//유효성 검사
 	$(document).ready(function(){
 	$('#btn').click(function(){
-	//Name 유효성 검사
-	if($('#memberName').val()==null){
-		$('#memberNameHp').text("이름을 입력하세요.");
-		$('#memberName').focus();
-		return;
-	}
-	Init();
-	//Phone 유효성 검사
-	if($('#memberPhone').val()==null){
-		$('#memberPhoneHp').text("연락처를 입력하세요.");
-		$('#memberPhone').focus();
-		return;
-	}
-	Init();
-	//Mail 유효성 검사
-	if($('#memberMail').val()==null){
-		$('#memberMail').text("메일을 입력하세요.");
-		$('#memberMail').focus();
-		return;
-	}
-	Init();
+
 		$('#findMemberId').submit();
+		});
 	});
-});
 </script>
 </head>
 <body>
@@ -70,7 +44,7 @@
 			<button type="button" id="btn">아이디 찾기</button>
 		</div>
 		<div>
-		<div th:if ="${msg}"></div>
+			<span th:text ="${msg}"></span>
 		</div>
 	</form>
 

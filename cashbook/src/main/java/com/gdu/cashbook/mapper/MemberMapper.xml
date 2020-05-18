@@ -13,14 +13,16 @@
 	 		member_name,
 	 		member_address,
 	 		member_phone,
-	 		member_mail
+	 		member_mail,
+	 		member_pic
 	 	)VALUES(
 	 		#{memberId},
 	 		PASSWORD(#{memberPw}),
 	 		#{memberName},
 	 		#{memberAddr},
 	 		#{memberPhone},
-	 		#{memberMail}
+	 		#{memberMail},
+	 		#{memberPic}
 	 	)
 	 	<!-- #{} : 동적 ${} : 정적 -->
 	</insert>

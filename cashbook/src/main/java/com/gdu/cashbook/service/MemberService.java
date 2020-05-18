@@ -1,5 +1,7 @@
 package com.gdu.cashbook.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +9,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gdu.cashbook.mapper.MemberMapper;
 import com.gdu.cashbook.mapper.MemberidMapper;
 import com.gdu.cashbook.vo.LoginMember;
 import com.gdu.cashbook.vo.Member;
+import com.gdu.cashbook.vo.MemberForm;
 import com.gdu.cashbook.vo.Memberid;
 
 @Service
@@ -34,8 +38,56 @@ public class MemberService {
 		return memberMapper.checkMemberId(checkMemberId);
 	}
 	//회원가입
-	public int signUpMember(Member member) {
-		return memberMapper.signUp(member);
+	public int signUpMember(MemberForm memberForm) {
+		MultipartFile mf = memberForm.getMemberPic();
+		//확장자 필요
+		String originName = mf.getOriginalFilename();
+		System.out.println(originName+"<--Service.OriginName");
+		int lastDot = originName.lastIndexOf("."); 
+		String extension = originName.substring(lastDot);
+		/*
+		//이미지 파일만 받으려면
+		if(mf.getContentType().equals("image/png") || mf.getContentType().equals("image/jpeg")) {//jpeg나 png파일만 받을 수 있다
+			//업로드
+		}else {
+			//업로드 실패
+		}
+		*/
+		//새로운 이름을 생성 :UUID
+		//분리
+		String memberPic = memberForm.getMemberId()+extension;
+		
+		//3.서비스에 보내기
+		
+		//memberForm -> member
+		//파일->디스크에 물리적으로 저장
+		//1. db에 저장
+		Member member = new Member();
+		member.setMemberId(memberForm.getMemberId());
+		member.setMemberPw(memberForm.getMemberPw());
+		member.setMemberAddr(memberForm.getMemberAddr());
+		member.setMemberName(memberForm.getMemberName());
+		member.setMemberPhone(memberForm.getMemberPhone());
+		member.setMemberMail(memberForm.getMemberMail());
+		member.setMemberPic(memberPic);
+		int row =memberMapper.signUp(member);
+		System.out.println(member+"<--memberService.member");
+		
+		//2.파일 저장
+		String path = "D:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload";
+		//빈파일 생성
+		File file = new File(path+"\\"+memberPic);
+		try {
+			mf.transferTo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+			//자바의 예외 1. 예외처리를 해야만 문법적으로 이상이 없는 예외
+			//자바의 예외 2. 코드에서 구현하지 않아도 아무 문제없는 예외
+		}
+		
+		return row;
+		//return memberMapper.signUp(member);
 	}
 	//로그인
 	public LoginMember login(LoginMember loginMember) {

@@ -16,11 +16,7 @@
 //유효성 검사
 $(document).ready(function(){
 	$('#btn').click(function(){
-		if($('#memberId').val().length<4){
-			$('#memberIdHp').text("ID를 입력하세요.");
-			$('#memberId').focus();
-			return;
-		}
+		
 		
 		$('#findMemberPw').submit();
 	});
@@ -39,6 +35,9 @@ $(document).ready(function(){
 			Mail :
 			<input type="text" name="memberMail" id="memberMail">
 			<span id="memberMailHp"></span>
+		</div>
+		<div>
+			<span th:text ="${msg}"></span>
 		</div>
 		<div>
 			<button type="button" id="btn">비밀번호 찾기</button>

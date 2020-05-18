@@ -88,8 +88,13 @@ $(document).ready(function(){
 		</div>
 	</form>
 	<!-- 회원가입 폼 -->
-	
-	<form id="myform" method="post" action="/signUp">
+	<!-- enctype="application/x-www-form-urlencoded" : 글자 형태로 전송 -->
+	<!-- multipart/form-data : 바이트 타입으로 전송(이미지 파일 보낼 때 주로 씀) -->
+	<form id="myform" method="post" action="/signUp" enctype="multipart/form-data">
+		<div>
+			사진 :
+			<input type="file" name="memberPic" id="">
+		</div>
 		<div>
 			ID :
 			<input type="text" name="memberId" th:value="${memberIdCheck}" id="memberId" readonly="readonly">
