@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>InsertTitleHere</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class = "container-fluid">
+	<div th:include="/include/menu::sidemenu"></div>
+	<h1 th:text="${today}">가계부</h1>
+	<table class="table" border="1">
+		<thead>
+			<tr>
+				<td>&nbsp;</td>
+				<td>카테고리</td>
+				<td>수입</td>
+				<td>지출</td>
+				<td>장소</td>
+				<td>메모</td>
+				<td>삭제</td>
+				<td>수정</td>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- ${cashList}->cash -->
+			<tr th:each="cash, index : ${cashList}">
+			<td th:text="${index.index}+1"></td>
+				<!-- 카테고리 -->
+				<td th:text="${cash.categoryName}"></td>
+				<!-- 타임리프 if,else문 -->
+				<!-- 수입 -->
+				<td th:if="${cash.cashKind}=='수입'" th:text="${'+'+cash.cashPrice}"></td>
+				<td th:unless="${cash.cashKind}=='수입'"></td>
+				<!-- 지출 -->
+				<td th:if="${cash.cashKind}=='지출'" th:text="${'-'+cash.cashPrice}"></td>
+				<td th:unless="${cash.cashKind}=='지출'"></td>
+				<!-- 장소 -->
+				<td th:text="${cash.cashPlace}"></td>
+				<!-- 메모 -->
+				<td th:text="${cash.cashMemo}"></td>
+				<td><a href="">삭제</a></td>
+				<td><a href="">수정</a></td>
+			</tr>
+		</tbody>
+	</table>
+		<div th:if="${session.loginMember != null}">
+			<button type="button"><a href="">입력</a></button>
+		</div>
+</div>
+</body>
+</html>

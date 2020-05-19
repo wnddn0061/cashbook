@@ -133,7 +133,7 @@ public class MemberService {
 		//파일이 있으면 삭제
 		if(file.exists()) {
 			file.delete();
-		}else {
+		}
 		MultipartFile mf = memberForm.getMemberPic();
 		//확장자를 찾기 위해 originName 출력
 		String originName = mf.getOriginalFilename();
@@ -167,8 +167,6 @@ public class MemberService {
 		}
 		return row;
 		}
-		return modifyMember(memberForm);
-	}
 
 	//ID 찾기
 	public String getMemberIdByString(Member member) {
