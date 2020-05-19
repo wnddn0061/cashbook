@@ -127,24 +127,32 @@ public class MemberService {
 	//이미지 파일이 있을 시 삭제 -> 삽입
 	public int modifyMember(MemberForm memberForm) {
 		//1.파일 불러오기
-		String memberPic = memberMapper.selectMemberPic(memberForm.getMemberId());
-		//빈파일 생성
-		File file = new File(path+memberPic);
-		//파일이 있으면 삭제
-		if(file.exists()) {
-			file.delete();
-		}
-		MultipartFile mf = memberForm.getMemberPic();
+		String originNamePic = memberMapper.selectMemberPic(memberForm.getMemberId());
+		MultipartFile mpf = memberForm.getMemberPic();
 		//확장자를 찾기 위해 originName 출력
-		String originName = mf.getOriginalFilename();
-		System.out.println(originName+"<--originName.Service.modify");
-		//확장자 자르기
-		int lastDot = originName.lastIndexOf(".");
-		String extension = originName.substring(lastDot);
-		
-		//새로운 이름을 생성 :UUID
-		String memberNamePic = memberForm.getMemberId()+extension;
-		//memberForm을 member로 변환
+		String originName = mpf.getOriginalFilename();
+		System.out.println(originNamePic+"<--originNamePic.Service.modify");
+		//memberPic 초기화
+		String memberPic = null;
+		//기존 파일 삭제
+		if(originName.equals("")) {//파일이 없을 경우 원래있던 파일(ex:default)의 이름이랑 같게 해줌
+			memberPic = originNamePic;
+		}else {
+			//새파일 생성
+			File rmFile = new File(path+"\\"+memberPic);
+			//원래 파일이 아닐 경우 삭제
+			if(rmFile.exists() && !originNamePic.equals("default.jpg")) {
+				rmFile.delete();
+			}
+			//확장자 자르기
+			int lastDot = originName.lastIndexOf(".");//지정된 문자(".")를 찾는 위치
+			String extension = originName.substring(lastDot);
+			//db에 저장
+			//새로운 이름을 생성 :UUID
+			memberPic = memberForm.getMemberId()+extension;
+			System.out.println(memberPic);
+		}
+		//memberForm을 member로 형변환
 		//파일을 디스크에 물리적 저장
 		Member member = new Member();
 		member.setMemberId(memberForm.getMemberId());
@@ -156,18 +164,20 @@ public class MemberService {
 		member.setMemberPic(memberPic);
 		int row =memberMapper.modifyMember(member);
 		System.out.println(member+"<--member.Service");
+		
+		if(!originName.equals("")) {
 		//빈 파일 생성 및 저장
-		File filePic = new File(path+memberPic);
+		File filePic = new File(path+"\\"+originNamePic);
 		//예외처리
 		try {
-			mf.transferTo(filePic);
+			mpf.transferTo(filePic);
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException();
+			}
 		}
 		return row;
-		}
-
+	}
 	//ID 찾기
 	public String getMemberIdByString(Member member) {
 		return memberMapper.selectMemberIdByMember(member);	

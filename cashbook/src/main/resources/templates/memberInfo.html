@@ -16,8 +16,8 @@
 <div class = "container-fluid">
 	<h1>회원정보</h1>
 	<div th:include="/include/menu::sidemenu"></div>
-		<div><a th:href = "@{/removeMember(memberId=${member.memberId})}">회원 탈퇴</a></div>
-		<div><a th:href = "@{/modifyMember(memberId=${member.memberId})}">정보 수정</a></div>
+		<div><a th:href = "@{/removeMember}">회원 탈퇴</a></div>
+		<div><a th:href = "@{/modifyMember}">정보 수정</a></div>
 		<table class="table" border="1">
 			<tr>
 				<td>사진</td>

@@ -142,7 +142,7 @@ public class MemberController {
 		}
 		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
 		model.addAttribute("member", member);
-		//System.out.println(member+"<--Controller.memberInfo.member");
+		System.out.println(member+"<--Controller.memberInfo.member");
 		return "memberInfo";
 	}
 	
@@ -183,7 +183,7 @@ public class MemberController {
 		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
 		model.addAttribute("member", member);
 		System.out.println(member+"<--Controller.modify.member");
-		return "modifyMember";
+		return "modifyMember"; //request
 	}
 	
 	@PostMapping("/modifyMember")
@@ -202,7 +202,7 @@ public class MemberController {
 		}
 		memberService.modifyMember(memberForm);
 		System.out.println(memberForm+"<--Controller.modify.member");
-		return "memberInfo";	
+		return "redirect:/memberInfo"; //response
 	}
 	
 	//ID 찾기

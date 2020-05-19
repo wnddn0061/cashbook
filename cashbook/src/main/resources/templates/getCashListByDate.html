@@ -16,8 +16,13 @@
 </head>
 <body>
 <div class = "container-fluid">
+	<h1>가계부</h1>
 	<div th:include="/include/menu::sidemenu"></div>
-	<h1 th:text="${today}">가계부</h1>
+	<h3 th:text="${day}"></h3>
+	<div>
+		<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
+		<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+	</div>
 	<table class="table" border="1">
 		<thead>
 			<tr>
@@ -42,17 +47,21 @@
 				<td th:if="${cash.cashKind}=='수입'" th:text="${'+'+cash.cashPrice}"></td>
 				<td th:unless="${cash.cashKind}=='수입'"></td>
 				<!-- 지출 -->
+				<!-- 삼항 연산자 : 조건 ? 참값 : 거짓값 -->
 				<td th:if="${cash.cashKind}=='지출'" th:text="${'-'+cash.cashPrice}"></td>
 				<td th:unless="${cash.cashKind}=='지출'"></td>
 				<!-- 장소 -->
 				<td th:text="${cash.cashPlace}"></td>
 				<!-- 메모 -->
 				<td th:text="${cash.cashMemo}"></td>
-				<td><a href="">삭제</a></td>
+				<td><a th:href="@{/removeCash(cashNo=${cash.cashNo})}">삭제</a></td>
 				<td><a href="">수정</a></td>
 			</tr>
 		</tbody>
 	</table>
+		<div>(수입 + 지출 ) 합계:
+			<span th:text="${cashKindSum}"></span>
+		</div>
 		<div th:if="${session.loginMember != null}">
 			<button type="button"><a href="">입력</a></button>
 		</div>

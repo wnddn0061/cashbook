@@ -16,4 +16,20 @@
     AND cash_date =#{cashDate}
     ORDER BY cash_no ASC
   </select>
+  <!-- 합계-->
+  <select id="selectCashKindSum" parameterType="com.gdu.cashbook.vo.Cash" resultType="int">
+  	SELECT
+		(SELECT SUM(cash_price)
+		FROM cash
+		WHERE member_id=#{memberId} 
+		AND cash_kind='수입' 
+		AND cash_date=#{cashDate})
+		-
+		(SELECT SUM(cash_price)
+		FROM cash
+		WHERE member_id=#{memberId} 
+		AND cash_kind='지출' 
+		AND cash_date=#{cashDate})
+	FROM dual;
+  </select>
 </mapper>
