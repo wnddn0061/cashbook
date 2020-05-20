@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.cashbook.mapper.CashMapper;
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.DayAndPrice;
 
 
 @Service
@@ -30,5 +31,13 @@ public class CashService {
 		map.put("cashList", cashList);
 		map.put("cashKindSum", cashKindSum);
 		return map;
+	}
+	//월별 합계
+	public List<DayAndPrice> getCashAndPriceList(String memberId, int year, int month){
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("year", year);
+		map.put("month", month);
+		return cashMapper.selectDayAndPrice(map);
 	}
 }

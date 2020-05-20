@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.CashService;
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.DayAndPrice;
 import com.gdu.cashbook.vo.LoginMember;
 
 @Controller
@@ -90,11 +91,22 @@ public class CashController {
 			//LocalDate -> Calendar 
 			cDay.set(day.getYear(), day.getMonthValue()-1,day.getDayOfMonth());//
 		}
+		//일 별 수입 지출 총액
+		String memberId=((LoginMember)session.getAttribute("loginMember")).getMemberId();
+		int year= cDay.get(Calendar.YEAR+0);
+		System.out.println(year+"<--year.ctrl");
+		int month= cDay.get(Calendar.MONTH+1);
+		System.out.println(month+"<--month.ctrl");
+		List<DayAndPrice> dayAndPriceList = cashService.getCashAndPriceList(memberId, year, month);
+		for(DayAndPrice dp : dayAndPriceList) {
+			System.out.println(dp);
+		}
 		/*0. 오늘 LocalDate 타입
 		 *1.오늘 Calendar타입
 		 *2.이번 달의 마지막 날
 		 *3.이번 달 1일의 요일
 		 */
+		model.addAttribute("dayAndPriceList", dayAndPriceList);
 		//LocalDate type의 day
 		model.addAttribute("day", day);
 		//현재 년도

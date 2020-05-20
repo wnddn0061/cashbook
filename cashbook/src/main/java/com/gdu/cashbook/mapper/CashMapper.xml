@@ -32,6 +32,17 @@
 		AND cash_date=#{cashDate})
 	FROM dual;
   </select>
+  <!-- 월 별 합계 -->
+  <select id="selectDayAndPrice" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.DayAndPrice">
+  SELECT DAY(cash_date) as day,
+  		SUM(CASE WHEN cash_kind='수입' THEN cash_price
+  			WHEN cash_kind='지출' THEN -cash_price END) as price
+  FROM cash
+  WHERE member_id=#{memberId} 
+  AND YEAR(cash_date)=#{year}
+  AND MONTH(cash_date)=#{month}
+  GROUP BY DAY(cash_date)
+  </select>
   <!-- 가계부 추가(insert) -->
   <insert id="addCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
   	INSERT INTO cash(
