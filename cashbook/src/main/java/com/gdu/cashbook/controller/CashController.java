@@ -2,6 +2,7 @@ package com.gdu.cashbook.controller;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class CashController {
 	@Autowired
 	private CashService cashService;
 	
+	//일 별 가게부 리스트
 	@GetMapping("/getCashListByDate")
 	public String getCashListByDate(HttpSession session, Model model, @RequestParam(value="day",required=false)
 									@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate day) { //형변환
@@ -69,4 +71,44 @@ public class CashController {
 	
 		return "getCashListByDate";
 		}
+	
+	//월별 가게부 리스트
+	@GetMapping("/getCashListByMonth")
+	public String getCashListByMonth(HttpSession session, Model model, @RequestParam(value="day", required = false)
+									@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate day) {
+		//세션 : 로그인이 아니면 인덱스로
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/index";
+		}
+		
+		Calendar cDay = Calendar.getInstance();
+		//로컬데이터 타입을 ->calendar 타입으로	
+		//값이 안넘어왔을때 오늘 날자
+		if(day ==null) {//LocalDate type의 day
+			day= LocalDate.now();
+		}else {//null이 아니면 로컬데이트를 cDay의 세팅값으로
+			//LocalDate -> Calendar 
+			cDay.set(day.getYear(), day.getMonthValue()-1,day.getDayOfMonth());//
+		}
+		/*0. 오늘 LocalDate 타입
+		 *1.오늘 Calendar타입
+		 *2.이번 달의 마지막 날
+		 *3.이번 달 1일의 요일
+		 */
+		//LocalDate type의 day
+		model.addAttribute("day", day);
+		//현재 년도
+		model.addAttribute("year",cDay.get(Calendar.YEAR)+0);
+		//현재 월
+		model.addAttribute("month",cDay.get(Calendar.MONTH)+1);
+		//마지막날짜
+		model.addAttribute("lastDay",cDay.getActualMaximum(Calendar.DATE));
+		
+		Calendar firstDay = cDay;//첫날을 구함
+		firstDay.set(Calendar.DATE,1);//cDay에서 일을 1로 세팅
+		firstDay.get(Calendar.DAY_OF_WEEK);
+		System.out.println("firstDay.get(Calendar.DAY_OF_WEEK):"+firstDay.get(Calendar.DAY_OF_WEEK));//요일 구하는 메소드(0 : 일요일 1: 월 2:화...6: 토요일)
+		model.addAttribute("firstDayOfWeek",firstDay.get(Calendar.DAY_OF_WEEK));
+	return "getCashListByMonth";	
+	}
 }
