@@ -60,7 +60,7 @@
 		</tbody>
 	</table>
 		<div>(수입 + 지출 ) 합계:
-			<span th:text="${cashKindSum}"></span>
+			<span th:text="${#numbers.formatInteger(cashKindSum,0,'COMMA')}"></span>원
 		</div>
 		<div th:if="${session.loginMember != null}">
 			<button type="button"><a href="">입력</a></button>

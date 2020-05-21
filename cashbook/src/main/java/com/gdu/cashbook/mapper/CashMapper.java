@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.cashbook.vo.Cash;
 import com.gdu.cashbook.vo.DayAndPrice;
+import com.gdu.cashbook.vo.LoginMember;
 @Mapper
 public interface CashMapper {
 	//cash리스트
@@ -17,10 +18,11 @@ public interface CashMapper {
 	//수입,지출 일 별 합계
 	public int selectCashKindSum(Cash cash);
 	//수입,지출 월 별 합계
-	public List<DayAndPrice> selectDayAndPrice(Map<String, Object> map);
+	public List<DayAndPrice> selectDayAndPriceList(Map<String, Object> map);
 	//가계부 추가
+	public int addCashListByDate(Cash cash);
 	//가계부 삭제
-	
+	public void removeCashListByDate(Cash cash);
 	//가계부 수정
-
+	public int modifyCashListByDate(Cash Cash);
 }

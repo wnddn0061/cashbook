@@ -1,9 +1,7 @@
 package com.gdu.cashbook.controller;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.CashService;
@@ -25,6 +24,7 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashController {
 	@Autowired
 	private CashService cashService;
+
 	
 	//일 별 가게부 리스트
 	@GetMapping("/getCashListByDate")
@@ -93,11 +93,13 @@ public class CashController {
 		}
 		//일 별 수입 지출 총액
 		String memberId=((LoginMember)session.getAttribute("loginMember")).getMemberId();
-		int year= cDay.get(Calendar.YEAR+0);
+		int year= cDay.get(Calendar.YEAR);
 		System.out.println(year+"<--year.ctrl");
-		int month= cDay.get(Calendar.MONTH+1);
+		int month= cDay.get(Calendar.MONTH)+1;
 		System.out.println(month+"<--month.ctrl");
-		List<DayAndPrice> dayAndPriceList = cashService.getCashAndPriceList(memberId, year, month);
+		
+		List<DayAndPrice> dayAndPriceList = cashService.getDayAndPriceList(memberId, year, month);
+		System.out.println(dayAndPriceList+"<--Ctrl.dayAndPriceList");
 		for(DayAndPrice dp : dayAndPriceList) {
 			System.out.println(dp);
 		}
@@ -107,10 +109,9 @@ public class CashController {
 		 *3.이번 달 1일의 요일
 		 */
 		model.addAttribute("dayAndPriceList", dayAndPriceList);
+		System.out.println(model+"<--Ctrl.model.dayAndPriceList");
 		//LocalDate type의 day
 		model.addAttribute("day", day);
-		//현재 년도
-		model.addAttribute("year",cDay.get(Calendar.YEAR)+0);
 		//현재 월
 		model.addAttribute("month",cDay.get(Calendar.MONTH)+1);
 		//마지막날짜
@@ -118,9 +119,34 @@ public class CashController {
 		
 		Calendar firstDay = cDay;//첫날을 구함
 		firstDay.set(Calendar.DATE,1);//cDay에서 일을 1로 세팅
-		firstDay.get(Calendar.DAY_OF_WEEK);
 		System.out.println("firstDay.get(Calendar.DAY_OF_WEEK):"+firstDay.get(Calendar.DAY_OF_WEEK));//요일 구하는 메소드(0 : 일요일 1: 월 2:화...6: 토요일)
+		System.out.println(firstDay.get(Calendar.YEAR)+","+(firstDay.get(Calendar.MONTH)+1)+","+firstDay.get(Calendar.DATE));
 		model.addAttribute("firstDayOfWeek",firstDay.get(Calendar.DAY_OF_WEEK));
-	return "getCashListByMonth";	
+	return "/getCashListByMonth";
 	}
+	//가계부 삭제
+		@GetMapping("/removeCash")
+		public String removeCashListByDate(HttpSession session, Model model, Cash cash) {
+			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+			return "redirect:/index";
+			}
+			String memberPw=((LoginMember)session.getAttribute("loginMember")).getMemberPw();
+			
+			model.addAttribute("memberPw", memberPw);
+			System.out.println(memberPw+"<--Ctrl.remove.memberPw");
+			model.addAttribute("cash", cash);
+			
+			cashService.removeCashListByDate(cash);
+			return "removeCash";
+	}
+		@PostMapping("/removeCash")
+		public String removeCashListByDate(HttpSession session, @RequestParam("memberPw")String memberPw) {
+			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+				return "redirect:/index";
+				}
+			LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
+			loginMember.setMemberPw(memberPw);
+			System.out.println(loginMember+"<--Service.removeCash.loginMember");
+			return "redirect:/getCashListByDate";
+		}
 }

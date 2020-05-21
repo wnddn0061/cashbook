@@ -19,21 +19,21 @@
   <!-- 합계-->
   <select id="selectCashKindSum" parameterType="com.gdu.cashbook.vo.Cash" resultType="int">
   	SELECT
-		(SELECT SUM(cash_price)
+		(SELECT IFNULL(SUM(cash_price),0)
 		FROM cash
 		WHERE member_id=#{memberId} 
 		AND cash_kind='수입' 
 		AND cash_date=#{cashDate})
 		-
-		(SELECT SUM(cash_price)
+		(SELECT IFNULL(SUM(cash_price),0)
 		FROM cash
 		WHERE member_id=#{memberId} 
 		AND cash_kind='지출' 
 		AND cash_date=#{cashDate})
-	FROM dual;
+	FROM dual
   </select>
   <!-- 월 별 합계 -->
-  <select id="selectDayAndPrice" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.DayAndPrice">
+  <select id="selectDayAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.DayAndPrice">
   SELECT DAY(cash_date) as day,
   		SUM(CASE WHEN cash_kind='수입' THEN cash_price
   			WHEN cash_kind='지출' THEN -cash_price END) as price
@@ -43,16 +43,45 @@
   AND MONTH(cash_date)=#{month}
   GROUP BY DAY(cash_date)
   </select>
+  <!-- insert -->
   <!-- 가계부 추가(insert) -->
   <insert id="addCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
   	INSERT INTO cash(
+  		cash_no,
+  		member_id,
+  		cash_date,
+  		cash_kind,
+  		category_name,
+  		cash_price,
+  		cash_place,
+  		cash_memo
+  	)VALUES(
+  		#{cashNo},
+  		#{memberId},
+  		#{cashDate},
+  		#{cashKind},
+  		#{categoryName},
+  		#{cashPrice},
+  		#{cashPlace},
+  		#{cashMemo} 		
   	)
   </insert>
   <!-- 가계부 삭제(delete) -->
   <delete id="removeCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
   	DELETE
   	FROM cash
-  	WHERE cash_no = #{cashNo}
+  	WHERE cash_no =#{cashNo}
+  	AND member_id = #{memberId}
   </delete>
   <!-- 가계부 수정(update) -->
+  <update id="modifyCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
+  	UPDATE cash
+  	SET cash_kind =#{cashKind},
+  		category_name =#{categoryName},
+  		cash_price =#{cashPrice},
+  		cash_place =#{cashPlace},
+  		cash_memo =#{cashMemo}
+  	WHERE
+  		member_id =#{memberId}
+  </update>
 </mapper>

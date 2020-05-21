@@ -118,6 +118,7 @@ public class MemberService {
 		Memberid memberid = new Memberid();
 		memberid.setMemberId(loginMember.getMemberId());
 		memberidMapper.insertMemberid(memberid);
+		
 		//삭제
 		memberMapper.removeMember(loginMember);
 	}
