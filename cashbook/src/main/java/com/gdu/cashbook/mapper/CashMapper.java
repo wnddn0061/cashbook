@@ -22,7 +22,7 @@ public interface CashMapper {
 	//가계부 추가
 	public int addCashListByDate(Cash cash);
 	//가계부 삭제
-	public void removeCashListByDate(Cash cash);
+	public int removeCashListByDate(Cash cashNo);
 	//가계부 수정
 	public int modifyCashListByDate(Cash Cash);
 }

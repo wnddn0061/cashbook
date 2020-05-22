@@ -70,8 +70,7 @@
   <delete id="removeCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
   	DELETE
   	FROM cash
-  	WHERE cash_no =#{cashNo}
-  	AND member_id = #{memberId}
+  	WHERE cash_no = #{cashNo}
   </delete>
   <!-- 가계부 수정(update) -->
   <update id="modifyCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">

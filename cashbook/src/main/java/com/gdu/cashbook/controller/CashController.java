@@ -1,7 +1,9 @@
 package com.gdu.cashbook.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -126,27 +128,17 @@ public class CashController {
 	}
 	//가계부 삭제
 		@GetMapping("/removeCash")
-		public String removeCashListByDate(HttpSession session, Model model, Cash cash) {
+		public String removeCashListByDate(HttpSession session, Cash cashNo, Model model, 
+				@RequestParam(value="day",required=false)@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate day){
+			//세션
 			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 			}
-			String memberPw=((LoginMember)session.getAttribute("loginMember")).getMemberPw();
-			
-			model.addAttribute("memberPw", memberPw);
-			System.out.println(memberPw+"<--Ctrl.remove.memberPw");
-			model.addAttribute("cash", cash);
-			
-			cashService.removeCashListByDate(cash);
-			return "removeCash";
-	}
-		@PostMapping("/removeCash")
-		public String removeCashListByDate(HttpSession session, @RequestParam("memberPw")String memberPw) {
-			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
-				return "redirect:/index";
-				}
-			LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
-			loginMember.setMemberPw(memberPw);
-			System.out.println(loginMember+"<--Service.removeCash.loginMember");
+			model.addAttribute("day", day);
+			System.out.println(day+"<--Ctrl.remove.day");
+			cashService.removeCashListByDate(cashNo);
+			System.out.println(cashNo+"<--Ctrl.remove.cashNo");
+		
 			return "redirect:/getCashListByDate";
-		}
+	}
 }
