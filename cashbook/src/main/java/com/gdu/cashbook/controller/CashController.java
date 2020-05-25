@@ -141,5 +141,66 @@ public class CashController {
 		
 			return "redirect:/getCashListByDate?day="+day;
 	}
+	//가계부 수정
+		@GetMapping("/modifyCash")
+		public String modifyCashListByDate(HttpSession session, Cash cash, Model model,
+				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day){
+				//세션
+				if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+				return "redirect:/index";
+				}
+				model.addAttribute("day", day);
+				System.out.println(day+"<--Ctrl.modify.day");
+				cashService.modifyCashListByDate(cash);
+				System.out.println(cash+"<--Ctrl.Get.modify.cash");
+			return "modifyCash";
+		}
+		
+		@PostMapping("/modifyCash")
+		public String modifyCashListByDate(HttpSession session, Model model, Cash cash,
+				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day){
+				//세션
+				if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+				return "redirect:/index";
+				}
+				model.addAttribute("day", day);
+				System.out.println(day+"<--Ctrl.Post.modify.day");
+				cashService.modifyCashListByDate(cash);
+				System.out.println(cash+"<--Ctrl.Post.modify.cash");
+				
+				return "redirect:/getCashListByDate?day="+day;
+		}
+		//가계부 추가
+		@GetMapping("/addCash")
+		public String addCash(HttpSession session, Cash cash,Model model,
+				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day) {
+			//세션
+			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+			return "redirect:/index";
+			}
+			String memberId=((LoginMember)session.getAttribute("loginMember")).getMemberId();
+			System.out.println(memberId+"<--Ctrl.addGet.memberId");
+			model.addAttribute("day", day);
+			System.out.println(day+"<--Ctrl.add.day");
+			cashService.addCashListByDate(cash);
+			System.out.println(cash+"<--Ctrl.add.day");
+			return "addCash";
+		}
+		@PostMapping("/addCash")
+		public String addCash(HttpSession session, Model model,Cash cash,
+				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day) {
+			//세션
+			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+			return "redirect:/index";
+			}
+			String memberId=((LoginMember)session.getAttribute("loginMember")).getMemberId();
+			System.out.println(memberId+"<--Ctrl.addPost.memberId");
+			model.addAttribute("day", day);
+			System.out.println(day+"<--Ctrl.add.day");
+			cashService.addCashListByDate(cash);
+			System.out.println(cash+"<--Ctrl.add.day");
+			
+			return "redirect:/getCashListByDate?day="+day;
+		}
 		
 }

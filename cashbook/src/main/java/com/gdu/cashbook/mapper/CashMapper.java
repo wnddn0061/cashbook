@@ -24,5 +24,5 @@ public interface CashMapper {
 	//가계부 삭제
 	public int removeCashListByDate(Cash cashNo);
 	//가계부 수정
-	public int modifyCashListByDate(Cash Cash);
+	public int modifyCashListByDate(Cash cash);
 }

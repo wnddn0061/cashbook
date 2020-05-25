@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>InsertTitleHere</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+ $(document).ready(function(){
+	 $('#btn').click(function(){
+		 $('#modifyCash').subimit();
+	 })
+ })
+</script>
+</head>
+<body>
+<div class="container-fluid">
+	<h1 th:text="${day}">가계부 수정</h1>
+	<form id="modifyCash" method="post" action="/modifyCash" enctype="multipart/form-data">
+	<table border="1">
+		<tr>
+			<th><label for="categoryName">카테고리 :</label> </th>
+			<td><input type="text" name="categoryName" id="categoryName" th:value="${cash.categoryName}"></td>
+		</tr>
+		<tr>
+			<th><label for="cashKind">수입/지출</label></th>
+			<td>
+				<select id="cashKind" name="cashKind">
+					<option value="">"수입/지출을 선택하세요.</option>
+					<option value="수입" th:selected="${cash.cashKind equals'수입'}">수입</option>
+					<option value="지출" th:selected="${cash.cashKind equals'지출'}">지출</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="cashPlace">장소 :</label></th>
+			<td><input type="text" name="cashPlace" id="cashPlace" th:value="${cash.cashPlace}"></td>
+		</tr>
+		<tr>
+			<th><label for="cashMemo">메모 :</label></th>
+			<td><textarea name="cashMemo" id="cashMemo" th:value="${cash.cashMemo}"></textarea>>
+		</tr>
+		<tr>
+			<th><label for="cashDate">날짜 :</label></th>
+			<td><input type="date" name="cashDate" id="cashDate" th:value="${cash.cashDate}"></td>
+		</tr>
+		</table>
+		<button type="button" id="btn">수정</button>
+	</form>
+</div>
+</body>
+</html>

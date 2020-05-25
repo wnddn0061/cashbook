@@ -55,7 +55,7 @@
 				<!-- 메모 -->
 				<td th:text="${cash.cashMemo}"></td>
 				<td><a th:href="@{/removeCash(cashNo=${cash.cashNo}, day=${day})}">삭제</a></td>
-				<td><a href="">수정</a></td>
+				<td><a th:href="@{/modifyCash(day=${day})}">수정</a></td>
 			</tr>
 		</tbody>
 	</table>
@@ -63,7 +63,7 @@
 			<span th:text="${#numbers.formatInteger(cashKindSum,0,'COMMA')}"></span>원
 		</div>
 		<div th:if="${session.loginMember != null}">
-			<button type="button"><a href="">입력</a></button>
+			<a th:href="@{/addCash(day=${day})}">입력</a>
 		</div>
 </div>
 </body>

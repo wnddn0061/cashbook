@@ -41,6 +41,10 @@ public class CashService {
 		System.out.println(map+"<--map.Service.month");
 		return cashMapper.selectDayAndPriceList(map);
 	}
+	//추가
+	public int addCashListByDate(Cash cash) {
+		return cashMapper.addCashListByDate(cash);
+	}
 	//삭제
 	public int removeCashListByDate(Cash cashNo) {
 		//삭제

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>InsertTitleHere</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<script>
+$(document).ready(function(){
+	$('#btn').click(function(){
+		
+	})
+})
+</script>
+<body>
+<div class="container-fluid">
+	<h1 th:text="${day}">가계부 입력</h1>
+	<form id="addCash" method="post" action="/addCash" enctype="multipart/form-data">
+		<table border="1">
+			<tr>
+				<th>카테고리 :</th>
+				<td><input type="text" name="categoryName" id="categoryName"></td>
+			</tr>
+			<tr>
+				<th><label for="cashKind">수입/지출</label></th>
+					<td>
+						<select id="cashKind" name="cashKind">
+						<option value="수입">수입</option>
+						<option value="지출">지출</option>
+						</select>
+					</td>
+			</tr>
+			<tr>
+				<th>장소 :</th>
+				<td><input type="text" name="cashPlace" id="cashPlace"></td>
+			</tr>
+			<tr>
+				<td>메모 :</td>
+				<td><textarea name="cashMemo" id="cashMemo"></textarea></td>
+			</tr>
+		</table>
+		<button type="button" id="btn">입력</button>
+	</form>
+</div>
+</body>
+</html>
