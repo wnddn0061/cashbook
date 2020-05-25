@@ -139,6 +139,7 @@ public class CashController {
 			cashService.removeCashListByDate(cashNo);
 			System.out.println(cashNo+"<--Ctrl.remove.cashNo");
 		
-			return "redirect:/getCashListByDate";
+			return "redirect:/getCashListByDate?day="+day;
 	}
+		
 }

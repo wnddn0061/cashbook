@@ -46,4 +46,9 @@ public class CashService {
 		//삭제
 		return cashMapper.removeCashListByDate(cashNo);
 	}
+	//수정
+	public int modifyCashListByDate(Cash cash) {
+		return  cashMapper.modifyCashListByDate(cash);
+		
+	}
 }

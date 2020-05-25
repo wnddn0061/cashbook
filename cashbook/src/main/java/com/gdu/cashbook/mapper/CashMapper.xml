@@ -79,8 +79,9 @@
   		category_name =#{categoryName},
   		cash_price =#{cashPrice},
   		cash_place =#{cashPlace},
-  		cash_memo =#{cashMemo}
+  		cash_memo =#{cashMemo},
+  		cash_date =#{cashDate}
   	WHERE
-  		member_id =#{memberId}
+  		cash_no =#{cashNo}
   </update>
 </mapper>
