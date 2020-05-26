@@ -52,7 +52,9 @@ public class CashService {
 	}
 	//수정
 	public int modifyCashListByDate(Cash cash) {
-		return  cashMapper.modifyCashListByDate(cash);
-		
+		return  cashMapper.modifyCashListByDate(cash);	
+	}
+	public Cash modifyCashListByOne(int cashNo) {
+		return cashMapper.modifyCashListByOne(cashNo);
 	}
 }

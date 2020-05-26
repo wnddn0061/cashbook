@@ -46,25 +46,24 @@
   <!-- insert -->
   <!-- 가계부 추가(insert) -->
   <insert id="addCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
-  	INSERT INTO cash(
-  		cash_no,
-  		member_id,
-  		cash_date,
-  		cash_kind,
-  		category_name,
-  		cash_price,
-  		cash_place,
-  		cash_memo
-  	)VALUES(
-  		#{cashNo},
-  		#{memberId},
-  		now(),
-  		#{cashKind},
-  		#{categoryName},
-  		#{cashPrice},
-  		#{cashPlace},
-  		#{cashMemo} 		
-  	)
+  	INSERT INTO
+      	cash (
+			member_id,
+			cash_date,
+			cash_kind,
+			category_name,
+			cash_price,
+			cash_place,
+			cash_memo
+		)VALUES(
+			#{memberId},
+			#{cashDate},
+			#{cashKind},
+			#{categoryName},
+			#{cashPrice},
+			#{cashPlace},
+			#{cashMemo}
+		)
   </insert>
   <!-- 가계부 삭제(delete) -->
   <delete id="removeCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
@@ -72,15 +71,29 @@
   	FROM cash
   	WHERE cash_no = #{cashNo}
   </delete>
-  <!-- 가계부 수정(update) -->
   <update id="modifyCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
-  	UPDATE cash
-  	SET cash_date =#{cashDate},
-  		cash_kind =#{cashKind},
-  		category_name =#{categoryName},
-  		cash_price =#{cashPrice},
-  		cash_place =#{cashPlace},
-  		cash_memo =#{cashMemo},
-  	WHERE cash_no =#{cashNo}
+  UPDATE cash
+		SET
+		category_name = #{categoryName},
+		cash_kind = #{cashKind},
+		cash_price = #{cashPrice},
+		cash_place = #{cashPlace},
+		cash_memo = #{cashMemo},
+		cash_date = #{cashDate}
+		WHERE cash_no = #{cashNo}
   </update>
+  <!-- 가계부 1개 고르기 -->
+  <select id ="modifyCashListByOne" parameterType="int" resultType="com.gdu.cashbook.vo.Cash">
+  SELECT 
+  		cash_no AS cashNo,
+  		category_name AS categoryName,
+  		cash_kind AS cashKind,
+  		cash_price AS cashPrice,
+  		cash_place AS cashPlace,
+  		cash_memo AS cashMemo,
+  		cash_date AS cashDate
+  		FROM cash
+  		WHERE cash_no =#{cashNo}
+  		
+  </select>
 </mapper>

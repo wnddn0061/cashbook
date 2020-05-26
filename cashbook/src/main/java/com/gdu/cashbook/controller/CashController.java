@@ -59,7 +59,7 @@ public class CashController {
 		cash.setMemberId(loginMemberId);//아이디 호출
 		cash.setCashDate(day.toString());
 		//toString" 메서드는 객체가 가지고 있는 정보나 값들을 문자열로 만들어 리턴하는 메소드
-		System.out.println(loginMemberId+"<--Ctrl.loginMemberId");
+		//System.out.println(loginMemberId+"<--Ctrl.loginMemberId");
 		
 		//호출한 아이디,날짜를 리스트로
 		Map<String,Object> map = cashService.getCashListByDate(cash);
@@ -69,8 +69,8 @@ public class CashController {
 		//모델 안에 오늘 날짜를 담아줌 
 		model.addAttribute("cashKindSum", map.get("cashKindSum"));
 		
-		System.out.println(map+"<--cashController.map");
-		System.out.println(model+"<--cashController.model");
+		//System.out.println(map+"<--cashController.map");
+		//System.out.println(model+"<--cashController.model");
 	
 		return "getCashListByDate";
 		}
@@ -96,12 +96,12 @@ public class CashController {
 		//일 별 수입 지출 총액
 		String memberId=((LoginMember)session.getAttribute("loginMember")).getMemberId();
 		int year= cDay.get(Calendar.YEAR);
-		System.out.println(year+"<--year.ctrl");
+		//System.out.println(year+"<--year.ctrl");
 		int month= cDay.get(Calendar.MONTH)+1;
-		System.out.println(month+"<--month.ctrl");
+		//System.out.println(month+"<--month.ctrl");
 		
 		List<DayAndPrice> dayAndPriceList = cashService.getDayAndPriceList(memberId, year, month);
-		System.out.println(dayAndPriceList+"<--Ctrl.dayAndPriceList");
+		//System.out.println(dayAndPriceList+"<--Ctrl.dayAndPriceList");
 		for(DayAndPrice dp : dayAndPriceList) {
 			System.out.println(dp);
 		}
@@ -111,7 +111,7 @@ public class CashController {
 		 *3.이번 달 1일의 요일
 		 */
 		model.addAttribute("dayAndPriceList", dayAndPriceList);
-		System.out.println(model+"<--Ctrl.model.dayAndPriceList");
+		//System.out.println(model+"<--Ctrl.model.dayAndPriceList");
 		//LocalDate type의 day
 		model.addAttribute("day", day);
 		//현재 월
@@ -135,41 +135,45 @@ public class CashController {
 			return "redirect:/index";
 			}
 			model.addAttribute("day", day);
-			System.out.println(day+"<--Ctrl.remove.day");
+			//System.out.println(day+"<--Ctrl.remove.day");
 			cashService.removeCashListByDate(cashNo);
-			System.out.println(cashNo+"<--Ctrl.remove.cashNo");
+			//System.out.println(cashNo+"<--Ctrl.remove.cashNo");
 		
 			return "redirect:/getCashListByDate?day="+day;
 	}
-	//가계부 수정
-		@GetMapping("/modifyCash")
-		public String modifyCashListByDate(HttpSession session, Cash cash, Model model,
-				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day){
-				//세션
-				if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
-				return "redirect:/index";
+			//가계부 수정
+				//수정하고 싶은 CashList를 불러옴
+				@GetMapping("/modifyCash")
+				public String modifyCashListByDate(HttpSession session, Cash cash, Model model,
+						@RequestParam(value="cashNo")int cashNo,
+						@RequestParam(value="day")@DateTimeFormat(pattern ="yyyy-MM-dd") LocalDate day){
+						//세션
+						if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+						return "redirect:/index";
+						}
+						model.addAttribute("day", day);
+						//System.out.println(model+"<--Ctrl.Get.modify.day");
+						cashService.modifyCashListByOne(cashNo);
+						//System.out.println(cashNo+"<--Ctrl.Get.modify.cashNo");
+						
+					return "modifyCash";
 				}
-				model.addAttribute("day", day);
-				System.out.println(day+"<--Ctrl.modify.day");
-				cashService.modifyCashListByDate(cash);
-				System.out.println(cash+"<--Ctrl.Get.modify.cash");
-			return "modifyCash";
-		}
-		
-		@PostMapping("/modifyCash")
-		public String modifyCashListByDate(HttpSession session, Model model, Cash cash,
-				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day){
-				//세션
-				if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
-				return "redirect:/index";
+				//수정한 CashList를 보냄
+				@PostMapping("/modifyCash")
+				public String modifyCashListByDate(HttpSession session, Model model, Cash cash,
+						@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day){
+						//세션
+						if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+						return "redirect:/index";
+						}
+						model.addAttribute("day", day);
+						//System.out.println(day+"<--Ctrl.Post.modify.day");
+						cashService.modifyCashListByDate(cash);
+						
+						//System.out.println(cash+"<--Ctrl.Post.modify.cash");
+						
+						return "redirect:/getCashListByDate?day="+day;
 				}
-				model.addAttribute("day", day);
-				System.out.println(day+"<--Ctrl.Post.modify.day");
-				cashService.modifyCashListByDate(cash);
-				System.out.println(cash+"<--Ctrl.Post.modify.cash");
-				
-				return "redirect:/getCashListByDate?day="+day;
-		}
 		//가계부 추가
 		@GetMapping("/addCash")
 		public String addCash(HttpSession session, Cash cash,Model model,
@@ -178,29 +182,26 @@ public class CashController {
 			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 			}
-			String memberId=((LoginMember)session.getAttribute("loginMember")).getMemberId();
-			System.out.println(memberId+"<--Ctrl.addGet.memberId");
-			model.addAttribute("day", day);
-			System.out.println(day+"<--Ctrl.add.day");
-			cashService.addCashListByDate(cash);
-			System.out.println(cash+"<--Ctrl.add.day");
+			
+			model.addAttribute("day",day);
+			System.out.println(day+"<--Ctrl.addGet.model");
 			return "addCash";
 		}
 		@PostMapping("/addCash")
-		public String addCash(HttpSession session, Model model,Cash cash,
-				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day) {
+		public String addCash(HttpSession session, Model model,Cash cash) {
 			//세션
 			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 			}
 			String memberId=((LoginMember)session.getAttribute("loginMember")).getMemberId();
+			cash.setMemberId(memberId);
 			System.out.println(memberId+"<--Ctrl.addPost.memberId");
-			model.addAttribute("day", day);
-			System.out.println(day+"<--Ctrl.add.day");
-			cashService.addCashListByDate(cash);
-			System.out.println(cash+"<--Ctrl.add.day");
 			
-			return "redirect:/getCashListByDate?day="+day;
+			String cashDate=cash.getCashDate();
+			cashService.addCashListByDate(cash);
+			System.out.println(cash+"<--Ctrl.addPost.cash");
+			
+			return "redirect:/getCashListByDate?day="+cashDate;
 		}
 		
 }

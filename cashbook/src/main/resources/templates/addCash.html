@@ -14,14 +14,16 @@
 </head>
 <script>
 $(document).ready(function(){
-	$('#btn').click(function(){
-		
+	
+	$('#btn').click(function(){	
+		$('#addCash').submit();
 	})
 })
 </script>
 <body>
+<div th:include="/include/menu::sidemenu" class="sidenav"></div>
 <div class="container-fluid">
-	<h1 th:text="${day}">가계부 입력</h1>
+	<h1 th:text="${day} +'일 가계부 입력'"></h1>
 	<form id="addCash" method="post" action="/addCash" enctype="multipart/form-data">
 		<table border="1">
 			<tr>
@@ -38,6 +40,10 @@ $(document).ready(function(){
 					</td>
 			</tr>
 			<tr>
+				<th>금액 :</th>
+				<td><input type="text" name="cashPrice" id="cashPrice"></td>
+			</tr>
+			<tr>
 				<th>장소 :</th>
 				<td><input type="text" name="cashPlace" id="cashPlace"></td>
 			</tr>
@@ -45,9 +51,13 @@ $(document).ready(function(){
 				<td>메모 :</td>
 				<td><textarea name="cashMemo" id="cashMemo"></textarea></td>
 			</tr>
+			<tr>
+				<td>날짜 :</td>
+				<td><input type="date" name="cashDate" id="cashDate"></td>
+			</tr>
 		</table>
-		<button type="button" id="btn">입력</button>
 	</form>
+	<button type="button" id="btn">입력</button>
 </div>
 </body>
 </html>
