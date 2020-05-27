@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.cashbook.mapper.CashMapper;
-import com.gdu.cashbook.mapper.MemberMapper;
+import com.gdu.cashbook.mapper.CategoryMapper;
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.Category;
 import com.gdu.cashbook.vo.DayAndPrice;
-import com.gdu.cashbook.vo.LoginMember;
 
 
 @Service
@@ -20,6 +20,8 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashService {
 	@Autowired
 	private CashMapper cashMapper;
+	@Autowired
+	private CategoryMapper categoryMapper;
 	
 	public Map<String, Object> getCashListByDate(Cash cash){
 		List<Cash> cashList = cashMapper.selectCashListByDate(cash);
@@ -42,7 +44,8 @@ public class CashService {
 		return cashMapper.selectDayAndPriceList(map);
 	}
 	//추가
-	public int addCashListByDate(Cash cash) {
+	public int addCashListByDate(Cash cash, Category categoryName) {
+		categoryMapper.addCategory(categoryName);
 		return cashMapper.addCashListByDate(cash);
 	}
 	//삭제
@@ -51,9 +54,11 @@ public class CashService {
 		return cashMapper.removeCashListByDate(cashNo);
 	}
 	//수정
-	public int modifyCashListByDate(Cash cash) {
+	public int modifyCashListByDate(Cash cash, Category categoryName) {
+		categoryMapper.addCategory(categoryName);
 		return  cashMapper.modifyCashListByDate(cash);	
 	}
+	//리스트 하나만 받기
 	public Cash modifyCashListByOne(int cashNo) {
 		return cashMapper.modifyCashListByOne(cashNo);
 	}

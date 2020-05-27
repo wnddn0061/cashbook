@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.CashService;
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.Category;
 import com.gdu.cashbook.vo.DayAndPrice;
 import com.gdu.cashbook.vo.LoginMember;
 
@@ -160,7 +161,7 @@ public class CashController {
 				}
 				//수정한 CashList를 보냄
 				@PostMapping("/modifyCash")
-				public String modifyCashListByDate(HttpSession session, Model model, Cash cash,
+				public String modifyCashListByDate(HttpSession session, Model model, Cash cash, Category category,
 						@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day){
 						//세션
 						if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
@@ -168,7 +169,7 @@ public class CashController {
 						}
 						model.addAttribute("day", day);
 						//System.out.println(day+"<--Ctrl.Post.modify.day");
-						cashService.modifyCashListByDate(cash);
+						cashService.modifyCashListByDate(cash, category);
 						
 						//System.out.println(cash+"<--Ctrl.Post.modify.cash");
 						
@@ -188,7 +189,7 @@ public class CashController {
 			return "addCash";
 		}
 		@PostMapping("/addCash")
-		public String addCash(HttpSession session, Model model,Cash cash) {
+		public String addCash(HttpSession session, Model model,Cash cash, Category category) {
 			//세션
 			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
@@ -198,7 +199,7 @@ public class CashController {
 			System.out.println(memberId+"<--Ctrl.addPost.memberId");
 			
 			String cashDate=cash.getCashDate();
-			cashService.addCashListByDate(cash);
+			cashService.addCashListByDate(cash, category);
 			System.out.println(cash+"<--Ctrl.addPost.cash");
 			
 			return "redirect:/getCashListByDate?day="+cashDate;

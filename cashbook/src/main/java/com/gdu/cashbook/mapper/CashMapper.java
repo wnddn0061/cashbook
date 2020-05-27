@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.cashbook.vo.Cash;
 import com.gdu.cashbook.vo.DayAndPrice;
-import com.gdu.cashbook.vo.LoginMember;
+import com.gdu.cashbook.vo.Category;
 @Mapper
 public interface CashMapper {
 	//cash리스트
