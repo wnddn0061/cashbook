@@ -26,7 +26,6 @@
 		background-color: grey;
 	}
 </style>
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -35,7 +34,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
 
 </head>
 <body>
@@ -55,17 +53,20 @@
 	<div class="gd-left gd-title">목</div>
 	<div class="gd-left gd-title">금</div>
 	<div class="gd-left gd-title">토</div>
-		
+		<!-- th:each : 반복 -->
 		<div th:each="i,index : ${#numbers.sequence(1, lastDay+(firstDayOfWeek-1))}" 
 			 th:class="${index.index%7} == 0 ? 'gd-clear gd-left': 'gd-left'">
+		<a th:href="@{/getCashListByDate(day=${day})}">
 		<!-- 날짜 -->
+		<!-- 시작일을 1일로 정하는 구문 -->
 		<div th:text="${i-(firstDayOfWeek-1)}>0 ? ${i-(firstDayOfWeek-1)} : ''"></div>
 		<!-- 수입지출함-->
 		<div th:each="dp : ${dayAndPriceList}">
 			<span th:if="${i-(firstDayOfWeek-1)}==${dp.day}">
-				<span th:class="${dp.price} >=0? 'gd-blue':'ge-red'" th:text="${dp.price}"></span>
-			</span>	
+				<span th:class="${dp.price} >=0? 'gd-blue':'ge-red'" th:text="${dp.price}+'원'"></span>
+			</span>
 		</div>
+		</a>
 		</div>
 </div>
 </body>

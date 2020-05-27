@@ -121,7 +121,7 @@ public class CashController {
 		model.addAttribute("lastDay",cDay.getActualMaximum(Calendar.DATE));
 		
 		Calendar firstDay = cDay;//첫날을 구함
-		firstDay.set(Calendar.DATE,1);//cDay에서 일을 1로 세팅
+		firstDay.set(Calendar.DATE,1);//cDay에서 날짜를 1로 세팅
 		System.out.println("firstDay.get(Calendar.DAY_OF_WEEK):"+firstDay.get(Calendar.DAY_OF_WEEK));//요일 구하는 메소드(0 : 일요일 1: 월 2:화...6: 토요일)
 		System.out.println(firstDay.get(Calendar.YEAR)+","+(firstDay.get(Calendar.MONTH)+1)+","+firstDay.get(Calendar.DATE));
 		model.addAttribute("firstDayOfWeek",firstDay.get(Calendar.DAY_OF_WEEK));

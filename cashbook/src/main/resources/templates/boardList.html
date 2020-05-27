@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+ #center{text-align: center;}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+	<h1>게시판</h1>
+	<div th:include="/include/menu::sidemenu"></div>
+	<div>
+		<a href="">이전</a>
+		<a href="">다음</a>
+	</div>
+	<table class="table" border="1">
+		<thead>
+			<tr>
+				<td>글 번호</td>
+				<td>글 제목</td>
+				<td>작성자</td>
+				<td>작성 날짜</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="board, index : ${boardList}">
+				<td th:text="${board.boardNo}"></td>
+				<td th:text="${board.boardTitle}"></td>
+				<td th:text="${board.memberId}"></td>
+				<td th:text="${board.boardDate}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

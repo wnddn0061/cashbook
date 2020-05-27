@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdu.cashbook.mapper.BoardMapper">
+  <select id="selectBoardList" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
+		SELECT
+			board_no as boardNo,
+			board_title as boardTitle,
+			board_content as boardContent,
+			member_id as memberId,
+			board_date as boardDate
+		FROM board
+  </select>
+</mapper>

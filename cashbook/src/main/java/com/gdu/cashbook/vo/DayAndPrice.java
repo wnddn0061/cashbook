@@ -19,5 +19,6 @@ public class DayAndPrice {
 	public String toString() {
 		return "DayAndPrice [day=" + day + ", price=" + price + "]";
 	}
-	
+
+
 }
