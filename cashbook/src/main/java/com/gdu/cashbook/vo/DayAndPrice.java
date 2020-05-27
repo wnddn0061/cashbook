@@ -3,6 +3,7 @@ package com.gdu.cashbook.vo;
 public class DayAndPrice {
 	private int day;
 	private int price;
+	private int date;
 	public int getDay() {
 		return day;
 	}
