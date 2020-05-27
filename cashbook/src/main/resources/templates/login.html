@@ -12,7 +12,32 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-#center{text-align: center;}
+body{
+	margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+ 	
+    display: ;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+	}
+	
+	#box div {
+		margin: 20px;
+		text-align:center;
+	}
+	#box input, button {
+		width: 300px;
+		text-align:center;
+	}
+	#box h1{
+	text-transform: uppercase;
+	text-align:center;
+    font-weight: 600;
+    font-size: 45px;
+    color: #000000;
+	}
 </style>
 <script>
 //유효성 검사
@@ -44,19 +69,17 @@
 </script>
 </head>
 <body>
-<div class="container-fluid" id="center">
-	<h1>Login</h1>
+<div class="container-fluid" id="box">
+	<h1>로그인</h1>
 	<form id= "loginForm" method="post" action="/login">
 		<!-- 아이디 -->
 		<div>
-			ID :
-			<input type="text" name="memberId" id="memberId">
+			<input type="text" name="memberId" id="memberId" placeholder="아이디">
 			<span id="memberIdHp"></span>
 		</div>
 		<!-- 비밀번호 -->
 		<div>
-			Pw :
-			<input type="password" name="memberPw" id="memberPw">
+			<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호">
 			<span id="memberPwHp"></span>
 		</div>
 		<!-- 메세지 출력 -->
@@ -68,7 +91,11 @@
 			<a th:href="@{/findMemberPw}">PW가 기억나지 않습니다.</a><!-- 아이디, 이메일 입력 : 이메일로 관리자가 변경된 비밀번호를 보냄 -->
 		</div>
 		<div>
-			<button type="button" id="btn">확인</button>
+			<button type="button" id="btn" class="btn btn-primary">로그인</button>
+		</div>
+
+		<div>
+			<a href="/signUp"><button type="button" id="btn" class="btn btn-primary">회원가입</button></a>
 		</div>
 	</form>
 </div>

@@ -12,8 +12,34 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-	#center{text-align:center;}
-	#left{}
+	body{
+	margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+ 	
+    display: ;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+	}
+	#box div {
+		margin: 20px;
+		text-align:center;
+	}
+	#box input, button {
+		width: 300px;
+		text-align:center;
+	}
+	#box h1{
+	text-transform: uppercase;
+	text-align:center;
+    font-weight: 600;
+    font-size: 45px;
+    color: #000000;
+	}
+	#box btn{
+	text-align:center;
+	}
 </style>
 <script>
 //초기화 함수
@@ -76,13 +102,14 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<div class="container-fluid" id="left">
+<div class="container-fluid" id="box">
 	<h1>회원가입</h1>
 	<!-- 아이디 중복확인 폼  -->
 	<form id="idCheckForm" method="post" action="/checkMemberId">
 		<div>
 			ID 중복 확인 :
 			<input type="text" name="memberIdCheck" id="memberIdCheck">
+			<br>
 			<button id="idBtn" type="button">중복확인</button>
 			<span id="memberIdCheckHp" th:text="${msg}"></span>
 		</div>
@@ -91,10 +118,7 @@ $(document).ready(function(){
 	<!-- enctype="application/x-www-form-urlencoded" : 글자 형태로 전송 -->
 	<!-- multipart/form-data : 바이트 타입으로 전송(이미지 파일 보낼 때 주로 씀) -->
 	<form id="myform" method="post" action="/signUp" enctype="multipart/form-data">
-		<div>
-			사진 :
-			<input type="file" name="memberPic" id="">
-		</div>
+		
 		<div>
 			ID :
 			<input type="text" name="memberId" th:value="${memberIdCheck}" id="memberId" readonly="readonly">
@@ -129,7 +153,11 @@ $(document).ready(function(){
 			<input type="text" name="memberMail" id="memberMail">
 			<span id="mailHelper"></span>
 		</div>
-		<button type="button" id="btn">회원가입</button>
+		<div>
+			사진 :
+			<input type="file" name="memberPic" id="">
+		</div>
+		<button type="button" id="btn" class="btn btn-primary">회원가입</button>
 
 	</form>
 </div>
