@@ -13,33 +13,21 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
 body{
-	margin: 0;
-    padding: 0;
-    background: #FFFFFF;
- 	
-    display: ;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+}
+	#side{
+	margin-top :20px;
+	height:90%;
+	display : flex;
+	flex-direction:column;
+	justify-content: space-around;
 	}
-	#sidemenu{
-	height: 100%;
-	width: 200px;
-	text-align: center;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-color: #3498db;
-	overflow-x: hidden;
-	padding-top: 20px;
-	}
+
 </style>
 </head>
 <body>
 <div class="container-fluid">
 	<h1>Home</h1>
-	<div th:include="/include/menu::sidemenu" class="sideMenu"></div>
+	<div id="side" th:include="/include/menu::sidemenu" class="sideMenu"></div>
 </div>
 </body>
 </html>
