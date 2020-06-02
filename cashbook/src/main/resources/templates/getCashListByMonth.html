@@ -53,20 +53,24 @@
 	<div class="gd-left gd-title">목</div>
 	<div class="gd-left gd-title">금</div>
 	<div class="gd-left gd-title">토</div>
+	
 		<!-- th:each : 반복 -->
 		<div th:each="i,index : ${#numbers.sequence(1, lastDay+(firstDayOfWeek-1))}" 
 			 th:class="${index.index%7} == 0 ? 'gd-clear gd-left': 'gd-left'">
-		<a th:href="@{/getCashListByDate(day=${day})}">
+			 
 		<!-- 날짜 -->
 		<!-- 시작일을 1일로 정하는 구문 -->
-		<div th:text="${i-(firstDayOfWeek-1)}>0 ? ${i-(firstDayOfWeek-1)} : ''"></div>
+		<a th:href="${i-(firstDayOfWeek-1)}<10 ? @{/getCashListByDate(day=${#temporals.Format(day, 'yyyy-MM-')}+'0'+${i-(firstDayOfWeek-1)})} :
+		 @{/getCashListByDate(day=${#temporals.Format(day, 'yyyy-MM-')}+ ${i-(firstDayOfWeek-1)})}">
+			<span th:text="${i-(firstDayOfWeek-1)}>0 ? ${i-(firstDayOfWeek-1)} : ''"></span>>
+		</a>
+		
 		<!-- 수입지출함-->
 		<div th:each="dp : ${dayAndPriceList}">
 			<span th:if="${i-(firstDayOfWeek-1)}==${dp.day}">
 				<span th:class="${dp.price} >=0? 'gd-blue':'ge-red'" th:text="${dp.price}+'원'"></span>
 			</span>
 		</div>
-		</a>
 		</div>
 </div>
 </body>

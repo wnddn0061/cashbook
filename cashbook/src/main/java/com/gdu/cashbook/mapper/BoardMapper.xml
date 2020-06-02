@@ -12,4 +12,32 @@
 			board_date as boardDate
 		FROM board
   </select>
+  <insert id="addBoard" parameterType="com.gdu.cashbook.vo.Board">
+  	INSERT INTO 
+  		board(
+  			board_title,
+  			board_content,
+  			member_id,
+  			board_date
+  			)VALUES(
+  			#{boardTitle},
+  			#{boardContent},
+  			#{memberId},
+  			#{boardDate}
+  			)	
+  </insert>
+  <update id="modifyBoard" parameterType="com.gdu.cashbook.vo.Board">
+  	UPDATE board
+  	SET
+  		board_title=#{boardTitle},
+  		board_content=#{boardContent},
+  		member_id=#{memberId},
+  		board_date =#{boardDate}
+  	WHERE board_no =#{boardNo}
+  </update>
+  <delete id="removeBoard" parameterType="com.gdu.cashbook.vo.Board">
+  DELETE 
+  FROM board
+  WHERE board_no =#{boardNo}
+  </delete>
 </mapper>

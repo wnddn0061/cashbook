@@ -1,6 +1,6 @@
 package com.gdu.cashbook.controller;
 
-import java.util.List;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +17,11 @@ public class BoardController {
 	private BoardService boardService;
 	@GetMapping("/boardList")
 	//게시판 리스트
-	public String selectBoardList(Board board) {
+	public String selectBoardList(Board board, HttpSession session) {
+		//세션 : 로그인이 아니면 인덱스로
+				if(session.getAttribute("loginMember")==null) {
+					return "redirect:/index";
+				}
 		boardService.selectBoardList(board);
 		return "/boardList";
 	}

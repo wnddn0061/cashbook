@@ -16,34 +16,37 @@
 </style>
 </head>
 <body>
-<div class="container-fluid">
-	<h1>게시판</h1>
+<div class="container-flouid">
+	<h1>게시판 상세보기</h1>
 	<div th:include="/include/menu::sidemenu"></div>
 	<div>
-		<a href="">이전</a>
-		<a href="">다음</a>
+		<a href="">이전글</a>
+		<a href="">다음글</a>
 	</div>
-	<table class="table" border="1">
-		<thead>
-			<tr>
-				<td>글 번호</td>
-				<td>글 제목</td>
-				<td>작성자</td>
-				<td>작성 날짜</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="board, index : ${boardList}">
-				<td th:text="${board.boardNo}"></td>
-				<td th:text="${board.boardTitle}"></td>
-				<td th:text="${board.memberId}"></td>
-				<td th:text="${board.boardDate}"></td>
-			</tr>
-		</tbody>
-	</table>
-	<div>
-		<a th:href="@{/addBoard}">게시물 입력</a>
-	</div>
+		<div>
+			글 제목
+			<input type="text" id="boardTitle">
+		</div>
+		<div>
+			작성자 이름
+		</div>
+		<div>
+			작성 날짜
+		</div>
+		<div>
+			글 내용
+		</div>
+		<div>
+			<a href="">목록</a>
+			<a href="">수정</a>
+			<a href="">삭제</a>
+		</div>
+		<div>
+			<input type="text" id="commentContent">
+		</div>
+		<form>
+		
+		</form>
 </div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.gdu.cashbook.controller;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -84,7 +85,6 @@ public class CashController {
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/index";
 		}
-		
 		Calendar cDay = Calendar.getInstance();
 		//로컬데이터 타입을 ->calendar 타입으로	
 		//값이 안넘어왔을때 오늘 날자
@@ -106,11 +106,16 @@ public class CashController {
 		for(DayAndPrice dp : dayAndPriceList) {
 			System.out.println(dp);
 		}
+		
 		/*0. 오늘 LocalDate 타입
 		 *1.오늘 Calendar타입
 		 *2.이번 달의 마지막 날
 		 *3.이번 달 1일의 요일
 		 */
+		
+		Calendar firstDay = cDay;//첫날을 구함
+		firstDay.set(Calendar.DATE,1);//cDay에서 날짜를 1로 세팅
+		//수입 + 지출의 합
 		model.addAttribute("dayAndPriceList", dayAndPriceList);
 		//System.out.println(model+"<--Ctrl.model.dayAndPriceList");
 		//LocalDate type의 day
@@ -119,12 +124,13 @@ public class CashController {
 		model.addAttribute("month",cDay.get(Calendar.MONTH)+1);
 		//마지막날짜
 		model.addAttribute("lastDay",cDay.getActualMaximum(Calendar.DATE));
+		//매달 1일 위치 선정
+		model.addAttribute("firstDayOfWeek",firstDay.get(Calendar.DAY_OF_WEEK));
 		
-		Calendar firstDay = cDay;//첫날을 구함
-		firstDay.set(Calendar.DATE,1);//cDay에서 날짜를 1로 세팅
+		
+		
 		System.out.println("firstDay.get(Calendar.DAY_OF_WEEK):"+firstDay.get(Calendar.DAY_OF_WEEK));//요일 구하는 메소드(0 : 일요일 1: 월 2:화...6: 토요일)
 		System.out.println(firstDay.get(Calendar.YEAR)+","+(firstDay.get(Calendar.MONTH)+1)+","+firstDay.get(Calendar.DATE));
-		model.addAttribute("firstDayOfWeek",firstDay.get(Calendar.DAY_OF_WEEK));
 	return "/getCashListByMonth";
 	}
 	//가계부 삭제
