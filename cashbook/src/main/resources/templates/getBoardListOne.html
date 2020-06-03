@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class = "container-fluid">
+	<h1>게시판 상세보기</h1>
+	<div th:include="/include/menu::sidemenu"></div>
+	<div>
+		<a th:href="@{/getBoardListOne(boardNo=(${board.boardNo}))}">이전 글</a>
+		<a th:href="@{/getBoardListOne(boardNo=(${board.boardNo}))}">다음 글</a>
+	</div>
+	<div>
+		<input type="hidden" id="boardNo" name="boardNo" th:text="${board.boardNo}" readonly="readonly">
+	</div>
+	<div>
+		<input type="text" th:value="${board.boardTitle}" readonly="readonly" th:placeholder="${board.boardTitle}">
+	</div>
+	<div>
+		<input type="text" th:value="${board.memberId}" readonly="readonly" id="memberId" th:placeholder="${board.memberId}">
+		<input type="text" th:value="${board.boardDate}" readonly="readonly" th:placeholder="${board.boardDate}">
+	</div>
+	<div>
+		<textarea rows="3" cols="50" readonly="readonly" th:value="${board.boardContent}" th:placeholder="${board.boardContent}"></textarea>
+	</div>
+	<div><a th:href="@{/getBoardList}">목록</a></div>
+</div>
+</body>
+</html>

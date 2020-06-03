@@ -3,41 +3,44 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.BoardMapper">
-  <select id="selectBoardList" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
-		SELECT
-			board_no as boardNo,
-			board_title as boardTitle,
-			board_content as boardContent,
-			member_id as memberId,
-			board_date as boardDate
-		FROM board
+  <select id="selectBoardListMember" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
+    SELECT
+    	board_no boardNo,
+    	member_id memberId,
+    	admin_id adminId,
+    	board_title boardTitle,
+    	board_content boardContent,
+    	board_date boardDate
+    FROM board
+    WHERE member_id=#{memberId}
   </select>
-  <insert id="addBoard" parameterType="com.gdu.cashbook.vo.Board">
-  	INSERT INTO 
-  		board(
-  			board_title,
-  			board_content,
-  			member_id,
-  			board_date
-  			)VALUES(
-  			#{boardTitle},
-  			#{boardContent},
-  			#{memberId},
-  			#{boardDate}
-  			)	
-  </insert>
-  <update id="modifyBoard" parameterType="com.gdu.cashbook.vo.Board">
-  	UPDATE board
-  	SET
-  		board_title=#{boardTitle},
-  		board_content=#{boardContent},
-  		member_id=#{memberId},
-  		board_date =#{boardDate}
+  <select id="selectBoardListMemberOne" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
+  	SELECT
+  		board_no boardNo,
+  		member_id memberId,
+  		admin_id adminId,
+  		board_title boardTitle,
+  		board_content boardContent,
+  		board_date boardDate
+  	FROM board
   	WHERE board_no =#{boardNo}
-  </update>
-  <delete id="removeBoard" parameterType="com.gdu.cashbook.vo.Board">
-  DELETE 
-  FROM board
-  WHERE board_no =#{boardNo}
-  </delete>
+  </select>
+  <insert id="addBoardList" parameterType="com.gdu.cashbook.vo.Board">
+  	INSERT INTO
+  	board(
+  		board_no,
+  		member_id,
+  		admin_id,
+  		board_title,
+  		board_content,
+  		board_date
+  	)VALUES(
+  		#{boardNo},
+  		#{memberId},
+  		#{adminId},
+  		#{boardTitle},
+  		#{boardContent},
+  		#{boardDate}
+  	)
+  </insert>
 </mapper>

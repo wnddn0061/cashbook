@@ -15,8 +15,15 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	public List<Board>selectBoardList(Board board){
-		
-		return boardMapper.selectBoardList(board);
+	public List<Board> selectBoardListMember(Board board){
+		List<Board> boardList = boardMapper.selectBoardListMember(board);
+		return boardMapper.selectBoardListMember(board);
 	}
+	public Board selectBoardListMemberOne(int boardNo) {
+		return boardMapper.selectBoardListMemberOne(boardNo);
+	}
+	public Board addBoarListMember(Board board) {
+		return boardMapper.addBoardList(board);
+	}
+
 }

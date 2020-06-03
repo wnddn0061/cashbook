@@ -11,12 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<style>
- #center{text-align: center;}
-</style>
 </head>
 <body>
-<div class="container-fluid">
+<div class = "container-fluid">
 	<h1>게시판</h1>
 	<div th:include="/include/menu::sidemenu"></div>
 	<div>
@@ -33,16 +30,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="board, index : ${boardList}">
-				<td th:text="${board.boardNo}"></td>
-				<td th:text="${board.boardTitle}"></td>
-				<td th:text="${board.memberId}"></td>
-				<td th:text="${board.boardDate}"></td>
-			</tr>
+			<tr th:each="bd : ${board}">
+				<td th:text="${bd.boardNo}"></td>
+				<td><a th:href="@{/getBoardListOne(boardNo=${bd.boardNo})}"><span th:text="${bd.boardTitle}"></span></a></td>
+				<td th:text="${bd.memberId}"></td>
+				<td th:text="${bd.boardDate}"></td>
 		</tbody>
 	</table>
 	<div>
-		<a th:href="@{/addBoard}">게시물 입력</a>
+		<a th:href="@{/addBoard}">게시물 추가</a>
 	</div>
 </div>
 </body>

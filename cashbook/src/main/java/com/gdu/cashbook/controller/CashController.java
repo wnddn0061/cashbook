@@ -183,7 +183,7 @@ public class CashController {
 				}
 		//가계부 추가
 		@GetMapping("/addCash")
-		public String addCash(HttpSession session, Cash cash,Model model,
+		public String addCash(HttpSession session, Model model,
 				@RequestParam(value="day", required=false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day) {
 			//세션
 			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
@@ -195,7 +195,7 @@ public class CashController {
 			return "addCash";
 		}
 		@PostMapping("/addCash")
-		public String addCash(HttpSession session, Model model,Cash cash, Category category) {
+		public String addCash(HttpSession session, Cash cash, Category category) {
 			//세션
 			if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
