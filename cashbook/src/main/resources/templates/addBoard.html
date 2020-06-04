@@ -13,6 +13,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
+document.getElementById('now_date')
 $(document).ready(function(){
 	
 	$('#btn').click(function(){	
@@ -31,7 +32,7 @@ $(document).ready(function(){
 		</div>
 		<div>
 			<input type="text" th:value="${board.memberId}" readonly="readonly" id="memberId" th:placeholder="${board.memberId}">
-			<input type="date" th:value="" readonly="readonly" th:placeholder="${board.boardDate}">
+			<input type="date" id="now_date" readonly="readonly" th:placeholder="${board.boardDate}">
 		</div>
 		<div>
 			<textarea rows="5" cols="50" id="boardContent" name="boardContent" th:placeholder="내용"></textarea>
