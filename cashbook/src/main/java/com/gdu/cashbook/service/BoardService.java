@@ -14,16 +14,18 @@ import com.gdu.cashbook.vo.Board;
 public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
-	
+	//게시판 리스트
 	public List<Board> selectBoardListMember(Board board){
 		List<Board> boardList = boardMapper.selectBoardListMember(board);
 		return boardMapper.selectBoardListMember(board);
 	}
+	//게시물 상세보기
 	public Board selectBoardListMemberOne(int boardNo) {
 		return boardMapper.selectBoardListMemberOne(boardNo);
 	}
-	public Board addBoarListMember(Board board) {
-		return boardMapper.addBoardList(board);
+	//게시물 추가하기
+	public void addBoarListMember(Board board) {
+		boardMapper.addBoardList(board);
 	}
 
 }

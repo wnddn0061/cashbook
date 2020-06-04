@@ -1,14 +1,17 @@
 package com.gdu.cashbook.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.BoardService;
 import com.gdu.cashbook.vo.Board;
@@ -18,7 +21,8 @@ import com.gdu.cashbook.vo.LoginMember;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	
+	private String boardDate;
+	//게시판 리스트
 	@GetMapping("/getBoardList")
 	public String selectBoardListMember(HttpSession session, Model model) {
 		//세션
@@ -36,6 +40,7 @@ public class BoardController {
 		
 		return "getBoardList";
 	}
+	//게시물 상세보기
 	@GetMapping("/getBoardListOne")
 	public String boardInfo(HttpSession session, Model model, int boardNo) {
 		//세션 : 로그인 중일 때 비활성화
@@ -49,24 +54,39 @@ public class BoardController {
 		model.addAttribute("board", board);
 		return "getBoardListOne";
 	}
+	//게시물 추가하기 form
+	
 	@GetMapping("/addBoard")
-	public String addBoard(HttpSession session, Board board, Model model) {
-		//세션 : 로그인 중일 때 비활성화
-		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
-			return "redirect:/index";
-		}
-		return "addBoard";
-	}
-	@PostMapping("/addBoard")
 	public String addBoard(HttpSession session, Model model,Board board) {
 		//세션 : 로그인 중일 때 비활성화
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 		}
 		String memberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
-		board.setAdminId(memberId);
+		System.out.println(memberId+"<--Ctrl.add.Get.memberId");
+		board.setMemberId(memberId);
+		String boardDate = board.getBoardDate();
+		System.out.println(boardDate+"<--boardDate");
+	
+		
+		
+		return "addBoard";
+	}
+	//게시물 추가하기 action
+	@PostMapping("/addBoard")
+	public String addBoard(HttpSession session, Board board) {
+		//세션 : 로그인 중일 때 비활성화
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+			return "redirect:/index";
+		}
+		String loginMember = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
+		System.out.println(loginMember+"<--loginMember");
+		
+		board.setMemberId(loginMember);
+		System.out.println(board+"<--Ctrl.addBoard.board");
+		
 		
 		boardService.addBoarListMember(board);
-		return "redirect:/addBoard";
+		return "redirect:/getBoardList";
 	}
 }

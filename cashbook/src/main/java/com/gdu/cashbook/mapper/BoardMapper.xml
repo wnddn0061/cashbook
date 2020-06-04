@@ -7,7 +7,7 @@
     SELECT
     	board_no boardNo,
     	member_id memberId,
-    	admin_id adminId,
+    
     	board_title boardTitle,
     	board_content boardContent,
     	board_date boardDate
@@ -18,7 +18,7 @@
   	SELECT
   		board_no boardNo,
   		member_id memberId,
-  		admin_id adminId,
+ 
   		board_title boardTitle,
   		board_content boardContent,
   		board_date boardDate
@@ -28,19 +28,15 @@
   <insert id="addBoardList" parameterType="com.gdu.cashbook.vo.Board">
   	INSERT INTO
   	board(
-  		board_no,
   		member_id,
-  		admin_id,
   		board_title,
   		board_content,
   		board_date
   	)VALUES(
-  		#{boardNo},
   		#{memberId},
-  		#{adminId},
   		#{boardTitle},
   		#{boardContent},
-  		#{boardDate}
+  		NOW()
   	)
   </insert>
 </mapper>

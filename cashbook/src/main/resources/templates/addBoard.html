@@ -25,24 +25,19 @@ $(document).ready(function(){
 	<h1>게시글 입력</h1>
 	<form id="addBoard" method="post" action="/addBoard" enctype="multipart/form-data">
 	<div th:include="/include/menu::sidemenu"></div>
-		<div>
-			<input type="hidden" id="boardNo" name="boardNo" th:text="${board.boardNo}" readonly="readonly">
-		</div>
+	
 		<div>
 			<input type="text" id="boardTitle" name="boardTitle" th:placeholder="제목">
 		</div>
 		<div>
-			<input type="hidden" id="adminId" name="adminId" th:value="${board.adminId}">
-		</div>
-		<div>
 			<input type="text" th:value="${board.memberId}" readonly="readonly" id="memberId" th:placeholder="${board.memberId}">
-			<input type="text" th:value="${board.boardDate}" readonly="readonly" th:placeholder="${board.boardDate}">
+			<input type="date" th:value="" readonly="readonly" th:placeholder="${board.boardDate}">
 		</div>
 		<div>
 			<textarea rows="5" cols="50" id="boardContent" name="boardContent" th:placeholder="내용"></textarea>
 		</div>
 		<div>
-			<button type="button" id="btn">입력</button>
+			<button type="button" id="btn" class="btn btn-primary">입력</button>
 		</div>
 	</form>
 </div>
