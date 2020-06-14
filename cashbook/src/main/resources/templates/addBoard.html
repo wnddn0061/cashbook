@@ -13,13 +13,27 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-document.getElementById('now_date')
+
+let helpInit=function(){
+	$('#titleHelper').text("");
+	$('#contentHelper').text("");
+};
+
 $(document).ready(function(){
-	
 	$('#btn').click(function(){	
+		if($('#boardTitle').val()==""){
+			helpInit();
+			$('#titleHelper').text("제목을 입력하세요.");	
+			$('#boardTitle').focus();
+		}else if($('#boardContent').val()==""){
+			helpInit();
+			$('#contentHelper').text("내용을 입력하세요.");
+			$('#boardContent').focus();
+		}else{
 		$('#addBoard').submit();
-	})
-})
+		}
+	});
+});
 </script>
 <body>
 <div class = "container-fluid">
@@ -29,13 +43,15 @@ $(document).ready(function(){
 	
 		<div>
 			<input type="text" id="boardTitle" name="boardTitle" th:placeholder="제목">
+			<span id="titleHelper"></span>
 		</div>
 		<div>
 			<input type="text" th:value="${board.memberId}" readonly="readonly" id="memberId" th:placeholder="${board.memberId}">
-			<input type="date" id="now_date" readonly="readonly" th:placeholder="${board.boardDate}">
+			<input type="date" th:value="${day}" readonly="readonly" th:placeholder="${board.boardDate}">
 		</div>
 		<div>
 			<textarea rows="5" cols="50" id="boardContent" name="boardContent" th:placeholder="내용"></textarea>
+			<span id="contentHelper"></span>
 		</div>
 		<div>
 			<button type="button" id="btn" class="btn btn-primary">입력</button>

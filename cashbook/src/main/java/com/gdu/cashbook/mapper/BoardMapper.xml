@@ -39,4 +39,16 @@
   		NOW()
   	)
   </insert>
+  <delete id="removeBoardList" parameterType="com.gdu.cashbook.vo.Board">
+  	DELETE 
+  	FROM board
+  	WHERE board_no =#{boardNo}
+  </delete>
+  <update id="modifyBoardList" parameterType="com.gdu.cashbook.vo.Board">
+  	UPDATE board
+  	SET
+  		board_title =#{boardTitle},
+  		board_content=#{boardContent}
+  	WHERE member_id =#{memberId}
+  </update>
 </mapper>

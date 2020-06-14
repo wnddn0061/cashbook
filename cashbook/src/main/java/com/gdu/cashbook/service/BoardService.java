@@ -27,5 +27,12 @@ public class BoardService {
 	public void addBoarListMember(Board board) {
 		boardMapper.addBoardList(board);
 	}
-
+	//게시물 수정하기
+	public int modifyBoardList(Board board) {
+		return boardMapper.modifyBoardList(board);
+	}
+	//게시물 삭제하기
+	public int removeBoardList(Board boardNo) {
+		return boardMapper.removeBoardList(boardNo);
+	}
 }

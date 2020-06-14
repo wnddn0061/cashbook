@@ -14,6 +14,10 @@ public interface BoardMapper {
 	public Board selectBoardListMemberOne(int boardNo);
 	//게시글 추가하기
 	public void addBoardList(Board board);
+	//게시글 수정하기
+	public int modifyBoardList(Board board);
+	//게시글 삭제하기
+	public int removeBoardList(Board boardNo);
 	
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -47,8 +48,9 @@ public class BoardController {
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 		}
-		String loginMember = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
 		
+		
+		String loginMember = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
 		
 		Board board = boardService.selectBoardListMemberOne(boardNo);
 		model.addAttribute("board", board);
@@ -57,16 +59,22 @@ public class BoardController {
 	//게시물 추가하기 form
 	
 	@GetMapping("/addBoard")
-	public String addBoard(HttpSession session, Model model,Board board) {
+	public String addBoard(HttpSession session, Model model,Board board, @RequestParam(value="day", required=false)
+	@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate day) {
 		//세션 : 로그인 중일 때 비활성화
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 			return "redirect:/index";
 		}
+		if(day==null) {
+			day=LocalDate.now();
+		}
+		System.out.println(day+"<--Ctrl.add.day");
 		String memberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
 		System.out.println(memberId+"<--Ctrl.add.Get.memberId");
 		board.setMemberId(memberId);
-		String boardDate = board.getBoardDate();
-		System.out.println(boardDate+"<--boardDate");
+		board.setBoardDate(day.toString());
+		model.addAttribute("day", day);
+		System.out.println(model+"<--Ctrl.add.get.day");
 	
 		
 		
