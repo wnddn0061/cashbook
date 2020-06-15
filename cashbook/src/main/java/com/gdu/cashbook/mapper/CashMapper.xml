@@ -71,6 +71,7 @@
   	FROM cash
   	WHERE cash_no = #{cashNo}
   </delete>
+  <!-- 가게부 수정 -->
   <update id="modifyCashListByDate" parameterType="com.gdu.cashbook.vo.Cash">
   UPDATE cash
 		SET

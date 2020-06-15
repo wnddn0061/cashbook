@@ -148,20 +148,20 @@ public class CashController {
 		
 			return "redirect:/getCashListByDate?day="+day;
 	}
-			//가계부 수정
-				//수정하고 싶은 CashList를 불러옴
-				@GetMapping("/modifyCash")
-				public String modifyCashListByDate(HttpSession session, Cash cash, Model model,
-						@RequestParam(value="cashNo")int cashNo,
-						@RequestParam(value="day")@DateTimeFormat(pattern ="yyyy-MM-dd") LocalDate day){
-						//세션
-						if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
-						return "redirect:/index";
-						}
-						model.addAttribute("day", day);
-						//System.out.println(model+"<--Ctrl.Get.modify.day");
-						cashService.modifyCashListByOne(cashNo);
-						//System.out.println(cashNo+"<--Ctrl.Get.modify.cashNo");
+		//가계부 수정
+		//수정하고 싶은 CashList를 불러옴
+		@GetMapping("/modifyCash")
+		public String modifyCashListByDate(HttpSession session, Cash cash, Model model,
+				@RequestParam(value="cashNo")int cashNo,
+				@RequestParam(value="day")@DateTimeFormat(pattern ="yyyy-MM-dd") LocalDate day){
+				//세션
+				if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+				return "redirect:/index";
+				}
+				model.addAttribute("day", day);
+				//System.out.println(model+"<--Ctrl.Get.modify.day");
+				cashService.modifyCashListByOne(cashNo);
+				//System.out.println(cashNo+"<--Ctrl.Get.modify.cashNo");
 						
 					return "modifyCash";
 				}

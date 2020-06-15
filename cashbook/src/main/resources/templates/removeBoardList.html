@@ -4,7 +4,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#btn').click(function(){
+			$('#removeBoard').submit();	
+		});
+	});
+</script>
 <body>
-
+<div class=container-fluid">
+	<h1>게시물 삭제</h1>
+	<form id="removeBoard" method="post" action="/removeBoard">
+		<div>
+			PW :
+			<input type="password" name=memberPw">
+		</div>
+		<div>
+			<button type="button" id="btn">삭제</button>
+		</div>
+	</form>
+</div>
 </body>
 </html>

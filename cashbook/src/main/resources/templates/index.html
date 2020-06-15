@@ -100,15 +100,15 @@ body{
 	<!-- 로그인 상태 -->
 	<!-- 로그인 상태에서는 회원가입 비활성화 -->
 	<div th:if="${session.loginMember != null}">
-		<a href="/logout" class="btn btn-primary btn-block text-white">Logout</a>
+		<a href="@{/logout}" class="btn btn-primary btn-block text-white">Logout</a>
 	</div>
 	<!-- 로그아웃 상태 -->
 	<div th:if="${session.loginMember == null}">
-		<a href="/login" class="btn btn-primary btn-block text-white">Login</a>
+		<a href="@{/login}" class="btn btn-primary btn-block text-white">Login</a>
 	</div>
 	<br>
 	<div th:if="${session.loginMember == null}">
-		<a href="/signUp" class="btn btn-primary btn-block text-white">회원가입</a>
+		<a href="@{/signUp}" class="btn btn-primary btn-block text-white">회원가입</a>
 	</div>
 	<br>
 	<div>

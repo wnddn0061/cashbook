@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>InsertTitleHere</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<script>
+
+let helpInit=function(){
+	$('#titleHelper').text("");
+	$('#contentHelper').text("");
+};
+
+$(document).ready(function(){
+	$('#btn').click(function(){	
+		
+	});
+});
+</script>
+<body>
+<div class = "container-fluid">
+	<h1>게시글 수정</h1>
+	<form id="modifyBoardList" method="post" action="/modifyBoardList" enctype="multipart/form-data">
+	<div th:include="/include/menu::sidemenu"></div>
+	
+		<div>
+			<input type="text" id="boardTitle" name="boardTitle"  th:value="${board.boardTitle}" th:placeholder="${board.boardTitle}">
+			<span id="titleHelper"></span>
+		</div>
+		<div>
+			<input type="text" th:value="${board.memberId}" readonly="readonly" id="memberId" th:placeholder="${board.memberId}">
+			<input type="date" th:value="${board.boardDate}" readonly="readonly"  th:placeholder="${board.boardDate}">
+		</div>
+		<div>
+			<textarea rows="5" cols="50" id="boardContent" name="boardContent" th:value="${board.boardContent}" th:placeholder="${board.boardContent}"></textarea>
+			<span id="contentHelper"></span>
+		</div>
+		<div>
+			<button type="button" id="btn" class="btn btn-primary">수정</button>
+		</div>
+	</form>
+</div>
+</body>
+</html>

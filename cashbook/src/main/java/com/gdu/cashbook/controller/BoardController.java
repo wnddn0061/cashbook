@@ -76,8 +76,6 @@ public class BoardController {
 		model.addAttribute("day", day);
 		System.out.println(model+"<--Ctrl.add.get.day");
 	
-		
-		
 		return "addBoard";
 	}
 	//게시물 추가하기 action
@@ -96,5 +94,40 @@ public class BoardController {
 		
 		boardService.addBoarListMember(board);
 		return "redirect:/getBoardList";
+	}
+	//게시물 수정하기 form
+	@GetMapping("/modifyBoardList")
+	public String modifyBoardList(HttpSession session, Model model, @RequestParam(value="boardNo")int boardNo) {
+		//세션
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+		return "redirect:/index";
+		}
+		Board board= new Board();
+		board.setBoardNo(boardNo);
+		
+		boardService.modifyBoardList(board);
+		return "modifyBoardList";
+	}
+	
+	//게시물 수정하기 action
+	@PostMapping("/modifyBoardList")
+	public String modifyBoardList(Board board, HttpSession session) {
+		//세션
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+		return "redirect:/index";
+		}
+		boardService.modifyBoardList(board);
+		return "modifyBoardList";
+	}
+	
+	//게시물 삭제 form
+	@GetMapping("/removeBoardList")
+	public String removeBoardList(HttpSession session, Model model, LoginMember loginMember) {
+		//세션
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+		return "redirect:/index";
+		}
+		
+		return "removeBoardList";
 	}
 }
