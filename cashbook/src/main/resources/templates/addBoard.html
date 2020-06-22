@@ -38,7 +38,7 @@ $(document).ready(function(){
 <body>
 <div class = "container-fluid">
 	<h1>게시글 입력</h1>
-	<form id="addBoard" method="post" action="/addBoard" enctype="multipart/form-data">
+	<form id="addBoard" method="post" th:action="@{/addBoard}" enctype="multipart/form-data">
 	<div th:include="/include/menu::sidemenu"></div>
 	
 		<div>

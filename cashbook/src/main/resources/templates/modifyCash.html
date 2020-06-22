@@ -23,7 +23,7 @@
 <div th:include="/include/menu::sidemenu" class="sidenav"></div>
 <div class="container-fluid">
 	<h1 th:text="${day} +'일 가계부 수정'"></h1>
-	<form id="modifyCash" method="post" action="/modifyCash" enctype="multipart/form-data">
+	<form id="modifyCash" method="post" th:action="@{/modifyCash}" enctype="multipart/form-data">
 	<input type="hidden" name="cashNo" th:value="${cash.cashNo}">
 	<input type="hidden" name="day" th:value="${day}">
 	<table border="1">

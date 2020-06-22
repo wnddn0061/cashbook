@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberidMapper">
 <insert id="insertMemberid" parameterType="com.gdu.cashbook.vo.Member">
-INSERT INTO memberId(
+INSERT INTO cashbook_memberId(
 	memberid_no,
 	member_id
 	)VALUES(

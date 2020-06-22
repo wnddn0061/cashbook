@@ -11,7 +11,7 @@
     	board_title boardTitle,
     	board_content boardContent,
     	board_date boardDate
-    FROM board
+    FROM cashbook_board
     WHERE member_id=#{memberId}
   </select>
   <select id="selectBoardListMemberOne" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
@@ -22,12 +22,12 @@
   		board_title boardTitle,
   		board_content boardContent,
   		board_date boardDate
-  	FROM board
+  	FROM cashbook_board
   	WHERE board_no =#{boardNo}
   </select>
   <insert id="addBoardList" parameterType="com.gdu.cashbook.vo.Board">
   	INSERT INTO
-  	board(
+  	cashbook_board(
   		member_id,
   		board_title,
   		board_content,
@@ -39,16 +39,16 @@
   		NOW()
   	)
   </insert>
-  <delete id="removeBoardList" parameterType="com.gdu.cashbook.vo.Board">
+  <delete id="removeBoardList" parameterType="int">
   	DELETE 
-  	FROM board
+  	FROM cashbook_board
   	WHERE board_no =#{boardNo}
   </delete>
   <update id="modifyBoardList" parameterType="com.gdu.cashbook.vo.Board">
-  	UPDATE board
+  	UPDATE cashbook_board
   	SET
   		board_title =#{boardTitle},
   		board_content=#{boardContent}
-  	WHERE member_id =#{memberId}
+  	WHERE board_no =#{boardNo}
   </update>
 </mapper>

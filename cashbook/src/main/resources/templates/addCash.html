@@ -36,7 +36,7 @@ $(document).ready(function(){
 <div th:include="/include/menu::sidemenu" class="sidenav"></div>
 <div class="container-fluid">
 	<h1 th:text="${day} +'일 가계부 입력'"></h1>
-	<form id="addCash" method="post" action="/addCash" enctype="multipart/form-data">
+	<form id="addCash" method="post" th:action="@{/addCash}" enctype="multipart/form-data">
 		<table border="1">
 			<tr>
 				<th>카테고리 :</th>

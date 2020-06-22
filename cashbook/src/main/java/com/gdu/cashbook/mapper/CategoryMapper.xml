@@ -6,7 +6,7 @@
 	<!-- 카테고리 입력, 중복값 무시, 업데이트 -->
 	<insert id="addCategory" parameterType="com.gdu.cashbook.vo.Category">
 	INSERT IGNORE INTO 
-		category(
+		cashbook_category(
 			category_name,
 			category_desc
 			)VALUES(

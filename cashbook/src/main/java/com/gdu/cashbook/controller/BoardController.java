@@ -97,15 +97,14 @@ public class BoardController {
 	}
 	//게시물 수정하기 form
 	@GetMapping("/modifyBoardList")
-	public String modifyBoardList(HttpSession session, Model model, @RequestParam(value="boardNo")int boardNo) {
+	public String modifyBoardList(HttpSession session, Model model, @RequestParam("boardNo") int boardNo) {
+		System.out.println(boardNo+"<--boardNo.ctrl.modify");
 		//세션
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 		return "redirect:/index";
 		}
-		Board board= new Board();
-		board.setBoardNo(boardNo);
-		
-		boardService.modifyBoardList(board);
+		Board board = boardService.selectBoardListMemberOne(boardNo);
+		model.addAttribute("board", board);
 		return "modifyBoardList";
 	}
 	
@@ -116,18 +115,19 @@ public class BoardController {
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 		return "redirect:/index";
 		}
+		
 		boardService.modifyBoardList(board);
-		return "modifyBoardList";
+		return "redirect:/getBoardList";
 	}
 	
-	//게시물 삭제 form
+	//게시물 삭제 
 	@GetMapping("/removeBoardList")
-	public String removeBoardList(HttpSession session, Model model, LoginMember loginMember) {
+	public String removeBoardList(HttpSession session, @RequestParam("boardNo")int boardNo) {
 		//세션
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 		return "redirect:/index";
 		}
-		
-		return "removeBoardList";
+		boardService.removeBoardList(boardNo);
+		return "redirect:/getBoardList";
 	}
 }

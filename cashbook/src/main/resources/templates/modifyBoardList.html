@@ -21,23 +21,22 @@ let helpInit=function(){
 
 $(document).ready(function(){
 	$('#btn').click(function(){	
-		
+		$('#modifyBoardList').submit();
 	});
 });
 </script>
 <body>
 <div class = "container-fluid">
 	<h1>게시글 수정</h1>
-	<form id="modifyBoardList" method="post" action="/modifyBoardList" enctype="multipart/form-data">
+	<form id="modifyBoardList" method="post" th:action="@{/modifyBoardList(boardNo=${board.boardNo})}" enctype="multipart/form-data">
 	<div th:include="/include/menu::sidemenu"></div>
-	
 		<div>
-			<input type="text" id="boardTitle" name="boardTitle"  th:value="${board.boardTitle}" th:placeholder="${board.boardTitle}">
+			<input type="text" id="boardTitle" name="boardTitle"  th:value="${board.boardTitle}">
 			<span id="titleHelper"></span>
 		</div>
 		<div>
-			<input type="text" th:value="${board.memberId}" readonly="readonly" id="memberId" th:placeholder="${board.memberId}">
-			<input type="date" th:value="${board.boardDate}" readonly="readonly"  th:placeholder="${board.boardDate}">
+			<input type="text" th:value="${board.memberId}" readonly="readonly">
+			<input type="date" th:value="${board.boardDate}" readonly="readonly">
 		</div>
 		<div>
 			<textarea rows="5" cols="50" id="boardContent" name="boardContent" th:value="${board.boardContent}" th:placeholder="${board.boardContent}"></textarea>

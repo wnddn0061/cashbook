@@ -35,7 +35,7 @@
 	</div>
 	<div><a th:href="@{/getBoardList}">목록</a></div>
 	<div>
-	<a th:href="@{/modifyBoardList}">수정</a>
+	<a th:href="@{/modifyBoardList(boardNo=(${board.boardNo}))}">수정</a>
 	<a th:href="@{/removeBoardList}">삭제</a>
 	</div>
 </div>

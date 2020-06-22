@@ -7,7 +7,7 @@
 	<!-- insert -->
 	<!-- 회원가입 -->
 	<insert id="signUp" parameterType="com.gdu.cashbook.vo.Member"><!-- vo 네임스페이스 -->
-	 	INSERT INTO member(
+	 	INSERT INTO cashbook_member(
 	 		member_id,
 	 		member_pw,
 	 		member_name,
@@ -32,7 +32,7 @@
 		SELECT 
 			member_id as memberId,
 			member_pw as memberPw
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 		AND member_pw = PASSWORD(#{memberPw})
 	</select>
@@ -43,9 +43,9 @@
 		SELECT
 			member_id
 		FROM 
-			(SELECT member_id FROM member
+			(SELECT member_id FROM cashbook_member
 			UNION
-			SELECT member_id FROM memberid
+			SELECT member_id FROM cashbook_memberid
 			)t
 		WHERE member_id = #{checkMemberId}
 	</select>
@@ -59,7 +59,7 @@
 			member_phone as memberPhone,
 			member_mail as memberMail,
 			member_pic as memberPic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 	</select>
 	
@@ -67,7 +67,7 @@
 	<select id="selectMemberIdByMember" parameterType="com.gdu.cashbook.vo.Member" resultType="String">
 		SELECT
 			CONCAT(SUBSTRING(member_id, 1, 3), '****')
-		FROM member
+		FROM cashbook_member
 		WHERE member_name = #{memberName}
 		AND member_phone = #{memberPhone}
 		AND member_mail = #{memberMail}
@@ -76,13 +76,13 @@
 	<!-- 이미지 파일 불러오기 -->
 	<select id ="selectMemberPic" parameterType="String" resultType="String">
 		SELECT member_pic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 	</select>
 	
 	<!-- update -->
 	<update id="modifyMember" parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE member
+		UPDATE cashbook_member
 		SET member_name = #{memberName},
 			member_address = #{memberAddr},
 			member_phone = #{memberPhone},
@@ -95,7 +95,7 @@
 	<!--PW 찾기 1. 사용자가 입력한 아이디와 메일이 일치하면 pw를 랜덤문자열로 변경 (update)-->
 	<!--PW 찾기 2. 문자열로 받은 pw를 메일로 전송 -->
 	<update id="updateMemberPw" parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE member
+		UPDATE cashbook_member
 		SET
 			member_pw = PASSWORD(#{memberPw})
 		WHERE
@@ -106,7 +106,7 @@
 	<!-- delete -->
 	<delete id="removeMember" parameterType="com.gdu.cashbook.vo.LoginMember">
 		DELETE 
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 		AND member_pw = PASSWORD(#{memberPw})	
 	</delete>

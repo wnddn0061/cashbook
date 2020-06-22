@@ -23,7 +23,7 @@ $(document).ready(function(){
 <body>
 <div class="container-fluid">
 	<h1>회원탈퇴</h1>
-		<form id="removeMember" method="post" action="/removeMember">
+		<form id="removeMember" method="post" th:action="@{/removeMember}">
 		<div>
 			ID :
 			<input type="text" th:value="${loginMember.memberId}" name="memberId" readonly="readonly">

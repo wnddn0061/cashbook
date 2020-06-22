@@ -22,7 +22,7 @@ $(document).ready(function(){
 <body>
 <div class="container-fluid">
 	<h1>가계부 삭제</h1>
-	<form id="removeCash" method="post" action="/removeCash">
+	<form id="removeCash" method="post" th:action="@{/removeCash}">
 		<div>
 			PW:
 			<input type="password" name="memberPw">

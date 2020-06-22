@@ -23,7 +23,7 @@ $(document).ready(function(){
 <body>
 <div class="container-fluid">
 	<h1>회원정보 수정</h1>
-		<form id="modifyMember" method="post" action="/modifyMember" enctype="multipart/form-data">
+		<form id="modifyMember" method="post" th:action="@{/modifyMember}" enctype="multipart/form-data">
 		<div>
 			 사진 :
 			 <input type="file" name="memberPic" id="memberPic" th:value="${member.memberPic}">

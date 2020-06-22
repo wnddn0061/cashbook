@@ -32,7 +32,7 @@ public class BoardService {
 		return boardMapper.modifyBoardList(board);
 	}
 	//게시물 삭제하기
-	public int removeBoardList(Board boardNo) {
+	public int removeBoardList(int boardNo) {
 		return boardMapper.removeBoardList(boardNo);
 	}
 }

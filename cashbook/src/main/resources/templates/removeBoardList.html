@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<script type="text/javascript">
+<title>InsertTitleHere</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
 	$(document).ready(function() {
 		$('#btn').click(function(){
 			$('#removeBoard').submit();	
@@ -14,10 +21,10 @@
 <body>
 <div class=container-fluid">
 	<h1>게시물 삭제</h1>
-	<form id="removeBoard" method="post" action="/removeBoard">
+	<form id="removeBoard" method="post" th:action="@{/removeBoardList}">
 		<div>
 			PW :
-			<input type="password" name=memberPw">
+			<input type="password" name="memberPw" id="memberPw">
 		</div>
 		<div>
 			<button type="button" id="btn">삭제</button>
