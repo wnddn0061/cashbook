@@ -22,7 +22,7 @@ import com.gdu.cashbook.vo.LoginMember;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	private String boardDate;
+	
 	//게시판 리스트
 	@GetMapping("/getBoardList")
 	public String selectBoardListMember(HttpSession session, Model model) {
@@ -122,12 +122,25 @@ public class BoardController {
 	
 	//게시물 삭제 
 	@GetMapping("/removeBoardList")
-	public String removeBoardList(HttpSession session, @RequestParam("boardNo")int boardNo) {
+	public String removeBoardList(HttpSession session, Board boardNo, Model model) {
 		//세션
 		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
 		return "redirect:/index";
 		}
+		String loginMember = ((LoginMember)session.getAttribute("loginMember")).getMemberPw();
 		boardService.removeBoardList(boardNo);
-		return "redirect:/getBoardList";
+		model.addAttribute("loginMember", loginMember);
+		return "removeBoardList";
+	}
+	
+	@PostMapping("/removeBoardList")
+	public String removeBoardList(HttpSession session, Board boardNo, @RequestParam("memberPw")String memberPw) {
+		if(session.getAttribute("loginMember")==null) {//로그인이 안돼있으면 인덱스로
+		return "redirect:/index";
+		}
+		LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
+		loginMember.setMemberPw(memberPw);
+		boardService.removeBoardList(boardNo);
+		return memberPw;
 	}
 }
